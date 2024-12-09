@@ -116,7 +116,6 @@ module.exports.logout=async(req,res)=>{
 
     
   } catch (error) {
-    c
 
     res.status(500).json({
       message: 'An error occurred during logout. Please try again.',
