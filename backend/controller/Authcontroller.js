@@ -11,9 +11,9 @@ module.exports.signup=async(req,res)=>{
 
      try {
 
-     const exisitingUser=User.findOne({email})
+     const exisitingUser=await User.findOne({email})
      if(exisitingUser){
-      res.status(404).json({
+      return res.status(404).json({
         message: 'User already exisits',
         
       });
@@ -21,26 +21,22 @@ module.exports.signup=async(req,res)=>{
      }
 
       
-         const salt=bcrypt.genSalt(10)
-         const hashedpasssword=bcrypt.hash(password,salt)
+        
+         const hashedpasssword=await bcrypt.hash(password,10)
 
        
         const newUser=new User({
             name,email,password:hashedpasssword,ProfilePic,resume,role
         })
 
-        if(newUser){
+      
         
-        GeneratorToken(newUser)
+
         newUser.save()
 
-        }
-        else{
-          res.status(404).json({
-            message: 'Failed to creating User',
-            
-          });
-        }
+        GeneratorToken(newUser._id,res)
+
+        
         
 
       res.status(201).json({
@@ -68,13 +64,64 @@ module.exports.signup=async(req,res)=>{
 
 
 
-module.export.login=async(req,res)=>{
+module.exports.login=async(req,res)=>{
+  const { email, password } = req.body
 
   try {
+
+    const exisitinguser=await User.findOne({email})
+
+        if(!exisitinguser){
+            return res.status(400).json({message:'Invalid credentials'})
+        }
+
+        const isPassword=await bcrypt.compare(password,exisitinguser.password)
+
+        if(!isPassword){
+            return res.status(400).json({message:'Invalid credentials'})
+        }
+     
+
+    GeneratorToken(exisitinguser._id,res)
+
+res.status(201).json({
+        message:"User Loggin successfully",
+        status:"success",
+        user:{
+            id:exisitinguser._id,
+            name:exisitinguser.name,
+            email:exisitinguser.email,
+            role:exisitinguser.role
+
+        }
+      })
     
-  } catch (error) {
     
+  } 
+  catch (error) {
+    console.error('Error during signup:', error.message);
+
+    res.status(500).json({
+      message: 'An error occurred during signup. Please try again.',
+      error: error.message,
+    });
   }
 
+
+}
+module.exports.logout=async(req,res)=>{
+  try {
+       res.cookie("Job-posting-app",'',{maxAge:0})
+       res.status(200).json({message:"Logged out successfully"})
+
+    
+  } catch (error) {
+    c
+
+    res.status(500).json({
+      message: 'An error occurred during logout. Please try again.',
+      error: error.message,
+    });
+  }
 
 }
