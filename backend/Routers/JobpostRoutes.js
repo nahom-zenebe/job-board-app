@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { authmiddleware} = require('../middleware/Authmiddleware'); 
-const { recruitermiddleware} = require('../middleware/Authmiddleware');
+const { authmiddleware,recruitermiddleware} = require('../middleware/Authmiddleware');
+const {createjobposting, getallpostedjob,getEarlypostedjob} = require('../controller/jobcontroller');
 
-
-
-router.get('/recruiter-route',authmiddleware,recruitermiddleware,getallpostedjob)
-router.get('/recruiter-route',authmiddleware,recruitermiddleware,getEarlypostedjob)
-
+router.post('/posts-job',authmiddleware,recruitermiddleware,createjobposting)
+router.get('/alljobposting',authmiddleware,getallpostedjob)
+router.get('/recent-job',authmiddleware,getEarlypostedjob)
 
 
 

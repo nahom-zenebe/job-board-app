@@ -14,7 +14,7 @@ const jobSchema=new mongoose.Schema({
         required:true,
 
     },
-    descritpion:{
+    description:{
         type:String,
         required:true
       
@@ -27,7 +27,7 @@ const jobSchema=new mongoose.Schema({
    
 
     },
-    loaction:{
+    location:{
         type:String, 
         required:true
     },
