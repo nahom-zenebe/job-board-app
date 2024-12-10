@@ -7,6 +7,9 @@ router.post('/signup', signup);
 router.post('/login', login);
 router.post('/logout',logout)
 router.post('/Update-Profile',authmiddleware,UpdateProfile)
+
+
+
 module.exports = router;
 
 

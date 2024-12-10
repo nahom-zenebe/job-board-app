@@ -12,6 +12,7 @@ const recruiterProfileSchema=new mongoose.Schema({
         required:true
 
     },
+    
     postedJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Job' }],
 
 },{
