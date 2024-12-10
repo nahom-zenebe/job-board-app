@@ -1,0 +1,99 @@
+
+const Application=require('../models/applicationmodel')
+const  Job=require('../models/JobPostingsmodel')
+
+
+module.exports.applicationForm=async(req,res)=>{
+
+    try {
+        const {job,seeker,coverLetter,status,appliedAt}=req.body
+        if (!job || !seeker || !coverLetter || !status || !appliedAt) {
+            return res.status(400).json({ message: "All fields are required" });
+          }
+
+        const newApplicationForm=new Application({
+            job,seeker,coverLetter,status,appliedAt
+        })
+
+        const savedApplication = await newApplicationForm.save();
+    
+        res.status(201).json({message:"Application created successfully",savedApplication});
+
+
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error creating application form", error: error.message });
+     
+    }
+
+}
+
+
+module.exports.getApplicationsByJob=async(req,res)=>{
+
+    try {
+        const jobId = req.params.jobId;
+    
+        const applications = await Application.find({ job: jobId })
+          .populate('job')
+          .populate('seeker');
+    
+        if (applications.length === 0) {
+          return res.status(404).json({ message: 'No applications found for this job' });
+        }
+    
+        res.status(200).json(applications);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error fetching applications for this job', error: error.message });
+      }
+
+}
+
+module.exports.getApplicationsBySeeker = async (req, res) => {
+    try {
+      const seekerId = req.params.seekerId;
+  
+      const applications = await Application.find({ seeker: seekerId })
+        .populate('job')
+        .populate('seeker');
+  
+      if (applications.length === 0) {
+        return res.status(404).json({ message: 'No applications found for this seeker' });
+      }
+  
+      res.status(200).json(applications);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error fetching applications for this seeker', error: error.message });
+    }
+  };
+
+  module.exports.getAllApplicationsForRecruiter = async (req, res) => {
+    try {
+        
+        const jobs = await Job.find({ postedBy: req.user._id });
+        const applications = await Application.find({ job: { $in: jobs.map(job => job._id) } })
+            .populate('job')
+            .populate('seeker');
+        res.status(200).json(applications);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch applications' });
+    }
+};
+
+
+module.exports.updateApplicationStatus = async (req, res) => {
+    try {
+        const { status } = req.body;
+        const application = await Application.findByIdAndUpdate(req.params.applicationId, { status }, { new: true });
+        if (!application) {
+            return res.status(404).json({ error: 'Application not found' });
+        }
+        res.status(200).json(application);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to update application status' });
+    }
+};
+  
