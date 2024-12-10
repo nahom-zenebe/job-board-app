@@ -5,7 +5,9 @@ const { recruitermiddleware} = require('../middleware/Authmiddleware');
 
 
 
-router.get('/recruiter-route',authmiddleware,recruitermiddleware)
+router.get('/recruiter-route',authmiddleware,recruitermiddleware,getallpostedjob)
+router.get('/recruiter-route',authmiddleware,recruitermiddleware,getEarlypostedjob)
+
 
 
 

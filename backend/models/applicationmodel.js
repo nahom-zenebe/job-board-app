@@ -9,6 +9,8 @@ const applicationSchema=new mongoose.Schema({
   coverLetter: { type: String },
   status: { type: String, enum: ['Pending', 'Accepted', 'Rejected'], default: 'Pending' },
   appliedAt: { type: Date, default: Date.now },
+},{
+  timestamps:true
 })
 
 

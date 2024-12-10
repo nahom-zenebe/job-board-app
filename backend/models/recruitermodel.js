@@ -14,7 +14,9 @@ const recruiterProfileSchema=new mongoose.Schema({
     },
     postedJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Job' }],
 
-})
+},{
+    timestamps:true
+  })
 
 const RecruiterProfile = mongoose.model('RecruiterProfile', recruiterProfileSchema);
 module.exports = RecruiterProfile;
