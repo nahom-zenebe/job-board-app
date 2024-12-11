@@ -3,10 +3,10 @@ import React from 'react';
 function Footer() {
   return (
     <div className="bg-blue-800 text-white pt-10 pb-6">
-      {/* Footer Content Container */}
+   
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {/* About Section */}
+          
           <div>
             <h2 className="text-3xl font-bold text-blue-300 mb-4">About Us</h2>
             <p className="text-lg text-gray-300">
@@ -16,7 +16,7 @@ function Footer() {
             </p>
           </div>
 
-          {/* Useful Links */}
+  
           <div>
             <h2 className="text-3xl font-bold text-blue-300 mb-4">Useful Links</h2>
             <ul className="space-y-2 text-lg text-gray-300">
@@ -27,7 +27,7 @@ function Footer() {
             </ul>
           </div>
 
-          {/* Contact Section */}
+        
           <div>
             <h2 className="text-3xl font-bold text-blue-300 mb-4">Contact Us</h2>
             <ul className="space-y-2 text-lg text-gray-300">
@@ -42,7 +42,7 @@ function Footer() {
         </div>
       </div>
 
-      {/* Footer Bottom */}
+
       <div className="bg-black text-gray-400 text-center py-4 mt-8">
         <p>&copy; 2024 JobPlatform. All rights reserved.</p>
       </div>

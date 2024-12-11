@@ -1,23 +1,23 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <div className="bg-gray-300">
       <div className="flex justify-between items-center px-10 py-5 bg-gray-800 h-24">
     
-        <h1 className="text-blue-700 text-4xl font-semibold">JobBoard</h1>
+        <h1 className="text-blue-700 text-4xl font-semibold"><Link to='/'>JobBoard</Link></h1>
 
   
         <nav>
           <ul className="flex space-x-10 text-white">
             <li className="text-xl font-sans hover:text-blue-700 transition-colors duration-300 cursor-pointer">
-              About Us
+             <Link to='/about'>About Us</Link> 
             </li>
             <li className="text-xl font-sans hover:text-blue-700 transition-colors duration-300 cursor-pointer">
-              Services
+            <Link to='/service'> Services</Link>
             </li>
             <li className="text-xl font-sans hover:text-blue-700 transition-colors duration-300 cursor-pointer">
-              Contact
+            <Link to='/contact'>Contact</Link>
             </li>
           </ul>
         </nav>
