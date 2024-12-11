@@ -69,4 +69,23 @@ const getEarlypostedjob=async(req,res)=>{
     }
 
 
-    module.exports={createjobposting, getallpostedjob,getEarlypostedjob}
+const UpdateJobPosting=async(req,res)=>{
+       const {jobId}=req.params
+       const {updateJob}=req.body
+    try {
+        const updatedJob=await  Job.findByIdAndUpdate(jobId,updateJob,{ new: true, runValidators: true })
+
+        if (!updatedJob) {
+            return res.status(404).json({ error: 'Job not found' });
+          }
+
+
+          res.status(200).json({ message: 'Job updated successfully', updatedJob });
+        } catch (error) {
+          console.error('Error updating job:', error);
+          res.status(500).json({ error: 'An error occurred while updating the job' });
+        }
+            
+}
+
+    module.exports={createjobposting, getallpostedjob,getEarlypostedjob,UpdateJobPosting}

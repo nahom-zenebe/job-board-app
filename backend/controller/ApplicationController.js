@@ -97,3 +97,26 @@ module.exports.updateApplicationStatus = async (req, res) => {
     }
 };
   
+module.exports.RemoveApplication = async (req, res) => {
+  const { applicationId } = req.params; 
+
+  try {
+  
+    if (!applicationId) {
+      return res.status(400).json({ error: 'Application ID is required' });
+    }
+    const deletedApplication = await Application.findByIdAndDelete(applicationId);
+
+
+    if (!deletedApplication) {
+      return res.status(404).json({ error: 'Application not found' });
+    }
+
+   
+    res.status(200).json({ message: 'Application removed successfully', deletedApplication });
+  } catch (error) {
+   
+    console.error('Error removing application:', error);
+    res.status(500).json({ error: 'An error occurred while removing the application' });
+  }
+};
