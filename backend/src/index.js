@@ -15,7 +15,13 @@ const cookieParser = require('cookie-parser');
 
 app.use(cookieParser())
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:3000', // Replace with your frontend URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true // This enables cookies and credentials
+  }));
+  
 app.use('/api/auth',AuthRoutes)
 app.use('/api/job',Jobposting)
 app.use('/api/recruiter',recruiterRoutes)

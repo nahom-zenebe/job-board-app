@@ -1,6 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { Loader } from 'lucide-react'; 
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../feature/authSlice';
 function LoginPages() {
+
+  const dispatch = useDispatch();
+  const {   isLogging } = useSelector((state) => state.auth);
+
+
+
   return (
     <div className="min-h-screen bg-gery-200 text-gray-200 mt-32">
       
@@ -26,7 +35,21 @@ function LoginPages() {
             />
           </div>
         
-          <button type='submit' className=' w-full bg-blue-700  h-10 rounded-lg'>Signup</button>
+          <button
+      type="submit"
+      className={`w-full h-10 rounded-lg ${isLogging ? 'bg-blue-500 cursor-not-allowed' : 'bg-blue-700'}`}
+      disabled={isLogging} 
+      variant="primary" 
+    >
+      {isLogging ? (
+        <>
+          <Loader className="mr-2" size="small" /> 
+          Logining up...
+        </>
+      ) : (
+        'Signup'
+      )}
+    </button>
           <p  className=' text-center mt-5 text-gray-700'>New to JobBorad?<Link className='underline text-blue-700 hover:no-underline' to='/signup'>Create an Account</Link></p>
         </form>
       </div>
