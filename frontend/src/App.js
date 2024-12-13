@@ -5,22 +5,28 @@ import AboutUs from "./pages/AboutUs.jsx";
 import Service from "./pages/Service.jsx";
 import Contacts from './pages/Contacts.jsx';
 import SignupPages from "./pages/SignupPages.jsx";
+import LoginPages from "./pages/LoginPages.jsx";
+import toast, { Toaster } from 'react-hot-toast';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
     <Router>
-      <Navbar /> {/* This will always be visible as part of the layout */}
+      <Navbar />
       <Routes>
         <Route index element={<StartedPage />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<Contacts />} />
         <Route path="/service" element={<Service />} />
         <Route path="/signup" element={<SignupPages/>}/>
+        <Route path="/login" element={<LoginPages/>}/>
       </Routes>
-      <Footer /> {/* This will always be visible at the bottom */}
+
+      <Footer /> 
+      <Toaster />
     </Router>
   );
 }
+
 
 export default App;

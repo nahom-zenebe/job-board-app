@@ -1,11 +1,18 @@
 import { useState } from 'react';
 import Navbar from '../Components/Navbar'
 import Footer from '../Components/Footer'
-import { Upload } from 'lucide-react';
-function SignupPages() {
-  const [dragActive, setDragActive] = useState(false);
 
+import { Upload } from 'lucide-react';
+import { Link } from 'react-router-dom';
+function SignupPages() {
+ 
+
+
+  const [dragActive, setDragActive] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
+
+
+
 
   const handleDrag = (e) => {
     e.preventDefault();
@@ -98,6 +105,7 @@ function SignupPages() {
               </label>
             </div>
             <button type='submit' className=' w-full bg-blue-700  h-10 rounded-lg'>Signup</button>
+            <p className='mt-10 text-center text-gray-800'>Already have an Account? <Link className='underline text-blue-700 hover:no-underline' to='/login'>Log in to user account</Link></p>
           </form>
         </div>
       </div>
