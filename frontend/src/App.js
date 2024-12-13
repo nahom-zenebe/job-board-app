@@ -4,6 +4,7 @@ import Footer from "./Components/Footer.jsx";
 import AboutUs from "./pages/AboutUs.jsx";
 import Service from "./pages/Service.jsx";
 import Contacts from './pages/Contacts.jsx';
+import SignupPages from "./pages/SignupPages.jsx";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<Contacts />} />
         <Route path="/service" element={<Service />} />
+        <Route path="/signup" element={<SignupPages/>}/>
       </Routes>
       <Footer /> {/* This will always be visible at the bottom */}
     </Router>

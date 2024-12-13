@@ -23,7 +23,7 @@ const Navbar = () => {
         </nav>
 
         <button className="bg-blue-700 text-white w-32 h-10 rounded-lg hover:bg-blue-900 transition-colors duration-300 cursor-pointer">
-          Get Started
+         <Link to='/signup'>Get Started</Link> 
         </button>
 
       </div>
