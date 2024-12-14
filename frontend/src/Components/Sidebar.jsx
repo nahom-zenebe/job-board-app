@@ -1,5 +1,6 @@
 import React from 'react';
 import avatar from '../images/avatar.png';
+import { Link } from 'react-router-dom';
 
 function Sidebar() {
   return (
@@ -23,23 +24,23 @@ function Sidebar() {
         <ul className="space-y-4  pb-6">
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
            
-            Edit Profile
+          <Link to='/UpdateProfile'>Edit Profile</Link> 
           </li>
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
           
-            Search Jobs
+            <Link to='/Searchjobs'>Search Jobs</Link>
           </li>
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
             
-           My Applications
+          <Link to='/MyApplication'> My Applications</Link>
           </li>
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
     
-           Hot Jobs
+          <Link to='/NewJob'>NewJobs</Link> 
           </li>
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
             
-            Account Settings
+            <Link to='AccountSetting'>Account Settings</Link>
           </li>
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
     
