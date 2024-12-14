@@ -26,11 +26,11 @@ function App() {
         <Route path="/service" element={<Service />} />
         <Route path="/signup" element={<SignupPages/>}/>
         <Route path="/MainDashboard" element={<MainDashboard/>}>
-        <Route path="UpdateProfile" element={<UpdateProfile/>}/>
-        <Route path="Searchjobs" element={<Searchjobs/>}/>
-        <Route path="MyApplication" element={<MyApplication/>}/>
-        <Route path="NewJob" element={<NewJob/>}/>
-        <Route path="AccountSetting" element={<ccountSetting/>}/>
+        <Route path="/MainDashboard/UpdateProfile" element={<UpdateProfile/>}/>
+        <Route path="/MainDashboard/Searchjobs" element={<Searchjobs/>}/>
+        <Route path="/MainDashboard/MyApplication" element={<MyApplication/>}/>
+        <Route path="/MainDashboard/NewJob" element={<NewJob/>}/>
+        <Route path="/MainDashboard/AccountSetting" element={<AccountSetting/>}/>
       </Route>
         <Route path="login" element={<LoginPages/>}/>
       </Routes>

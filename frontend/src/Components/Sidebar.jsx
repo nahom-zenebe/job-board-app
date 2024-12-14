@@ -24,23 +24,23 @@ function Sidebar() {
         <ul className="space-y-4  pb-6">
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
            
-          <Link to='/UpdateProfile'>Edit Profile</Link> 
+          <Link to='/MainDashboard/UpdateProfile'>Edit Profile</Link> 
           </li>
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
           
-            <Link to='/Searchjobs'>Search Jobs</Link>
+            <Link to='/MainDashboard/Searchjobs'>Search Jobs</Link>
           </li>
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
             
-          <Link to='/MyApplication'> My Applications</Link>
+          <Link to='/MainDashboard/MyApplication'> My Applications</Link>
           </li>
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
     
-          <Link to='/NewJob'>NewJobs</Link> 
+          <Link to='/MainDashboard/NewJob'>NewJobs</Link> 
           </li>
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
             
-            <Link to='AccountSetting'>Account Settings</Link>
+            <Link to='/MainDashboard/AccountSetting'>Account Settings</Link>
           </li>
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
     
