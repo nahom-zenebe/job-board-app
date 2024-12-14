@@ -6,7 +6,9 @@ import Service from "./pages/Service.jsx";
 import Contacts from './pages/Contacts.jsx';
 import SignupPages from "./pages/SignupPages.jsx";
 import LoginPages from "./pages/LoginPages.jsx";
-import toast, { Toaster } from 'react-hot-toast';
+
+import MainDashboard from './pages/MainDashboard.jsx'
+import { Toaster } from 'react-hot-toast';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -19,6 +21,7 @@ function App() {
         <Route path="/contact" element={<Contacts />} />
         <Route path="/service" element={<Service />} />
         <Route path="/signup" element={<SignupPages/>}/>
+        <Route path="/MainDashboard" element={<MainDashboard/>}/>
         <Route path="/login" element={<LoginPages/>}/>
       </Routes>
 
