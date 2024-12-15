@@ -41,10 +41,11 @@ export const logout = createAsyncThunk('/auth/logout', async (_, { rejectWithVal
   }
 });
 
-export const updateProfile = createAsyncThunk('/auth/updateProfile', async (data, { rejectWithValue }) => {
+export const updateProfile = createAsyncThunk('/auth/UpdateProfile', async (data, { rejectWithValue }) => {
   try {
-    const response = await axiosInstance.put('/auth/updateProfile', data);
+    const response = await axiosInstance.put('/auth/UpdateProfile', data, { withCredentials: true });
     return response.data;
+   
   } catch (error) {
     return rejectWithValue('Error during profile update');
   }

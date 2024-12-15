@@ -2,7 +2,11 @@ import React from 'react'
 
 function Searchjobs() {
   return (
-    <div>Searchjobs</div>
+    <div className="h-screen bg-white w-full  rounded-2xl shadow-2xl ">
+  <div>
+    
+  </div>
+    </div>
   )
 }
 

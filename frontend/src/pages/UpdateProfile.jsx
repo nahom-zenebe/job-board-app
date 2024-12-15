@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import avatar from '../images/avatar.png';
 import { useDispatch, useSelector } from 'react-redux';
-import {Camera } from 'lucide-react'
-import { Mail } from 'lucide-react'
-import { User } from 'lucide-react'
 import { updateProfile} from '../feature/authSlice'
+import {Camera } from 'lucide-react'
+import toast from 'react-hot-toast';
+
+
 function UpdateProfile() {
-  const { updateProfile,isUpdatingProfile} = useSelector((state) => state.auth);
+  const { isUpdatingProfile} = useSelector((state) => state.auth);
   const[selectedImage,setselectedImage]=useState(null)
   const dispatch = useDispatch();
 
@@ -14,6 +15,7 @@ function UpdateProfile() {
 
 
   const handleImageUpload=async(e)=>{
+    e.preventDefault()
     const file=e.target.files[0]
     if(!file)return
 
@@ -24,7 +26,13 @@ function UpdateProfile() {
       const base64Image=reader.result
 
       setselectedImage(base64Image)
-      await dispatch(updateProfile({ProfilePic:base64Image}))
+      try {
+        await dispatch(updateProfile(base64Image));
+    } catch (error) {
+        console.error('Error uploading image:', error);
+        alert('Failed to upload image. Please try again.');
+    }
+    
 
     }
     
@@ -38,7 +46,7 @@ function UpdateProfile() {
           <p className="mt-2 text-xl">Your profile information</p>
         </div>
 
-        {/* avatar upload section */}
+    
 
         <div className="flex flex-col items-center gap-4">
           <div className="relative">

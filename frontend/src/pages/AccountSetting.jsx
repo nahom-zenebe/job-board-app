@@ -2,7 +2,9 @@ import React from 'react'
 
 function AccountSetting() {
   return (
-    <div>AccountSetting</div>
+    <div className="h-screen bg-white w-full  rounded-2xl shadow-2xl ">
+      MyApplication
+      </div>
   )
 }
 
