@@ -14,6 +14,7 @@ function NewJob() {
     <div className="h-screen bg-white w-full  rounded-2xl shadow-2xl ">
     MyApplication
     
+    
     </div>
   )
 }
