@@ -32,7 +32,12 @@ const handlesignup=(e)=>{
   dispatch( signup({name,email,password,role,uploadedFile}))
   .unwrap()
   .then(()=>{
-    navigate('/MainDashboard');
+    if(role==='seeker'){
+      navigate('/MainDashboard');
+    }
+
+    navigate('/RecruiterDashboard');
+   
 
   })
   .catch((error) => {
