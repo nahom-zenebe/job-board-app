@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 
 
 
-initialState={
+const initialState={
     recruiterProfile: null,  
     loading: false,          
     error: null, 
@@ -30,7 +30,7 @@ export const createRecruiterProfile=createAsyncThunk('/recruiter/create',async(d
 export const getRecruiterProfile=createAsyncThunk('/recruiter/:id',async(userId,{rejectWithValue })=>{
 
     try {
-        const reponse=await axiosInstance.post(`/recruiter/${userId}`,data,{ withCredentials: true,})
+        const reponse=await axiosInstance.post(`/recruiter/${userId}`,{ withCredentials: true,})
     return reponse.data
         
     } catch (error) {

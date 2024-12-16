@@ -1,19 +1,23 @@
 import React from 'react';
 import avatar from '../images/avatar.png';
 import { Link } from 'react-router-dom';
+import {  useSelector } from 'react-redux';
 
 function Sidebar() {
+  const {  authUser } = useSelector((state) => state.auth);
+  
   return (
     <div className="w-64 h-auto p-6 bg-white shadow-2xl rounded-2xl ml-10">
     
       <div className="flex flex-col items-center">
         <img
           className="w-24 h-24 rounded-full border-4 border-blue-500"
-          src={avatar}
+          src={authUser.user.ProfilePic||avatar}
           alt="User Avatar"
         />
         <h1 className="mt-4 text-lg font-semibold text-gray-800">
-          Abebe Besoble
+          {authUser.user.name}
+          
         </h1>
         <p className="text-sm text-gray-500">Software Engineer</p>
       </div>

@@ -22,7 +22,7 @@ const handlelogin=(e)=>{
 
   })
   .catch((error) => {
-    toast.error(error || 'Signup failed');
+    console.log(error || 'Signup failed');
   });
 
 
