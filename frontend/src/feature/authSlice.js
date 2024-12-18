@@ -10,11 +10,12 @@ const initialState = {
   loading: false,
   isUpdatingProfile: false,
   error: null,
+
 };
 
-export const signup = createAsyncThunk('/auth/signup', async (data, { rejectWithValue }) => {
+export const signup = createAsyncThunk('auth/signup', async (data, { rejectWithValue }) => {
   try {
-    const response = await axiosInstance.post('/auth/signup', data, {
+    const response = await axiosInstance.post('auth/signup', data, {
       withCredentials: true,
     });
     return response.data;
@@ -23,27 +24,27 @@ export const signup = createAsyncThunk('/auth/signup', async (data, { rejectWith
   }
 });
 
-export const login = createAsyncThunk('/auth/login', async (data, { rejectWithValue }) => {
+export const login = createAsyncThunk('auth/login', async (data, { rejectWithValue }) => {
   try {
-    const response = await axiosInstance.post('/auth/login', data, { withCredentials: true });
+    const response = await axiosInstance.post('auth/login', data, { withCredentials: true });
     return response.data;
   } catch (error) {
     return rejectWithValue('Error during login');
   }
 });
 
-export const logout = createAsyncThunk('/auth/logout', async (_, { rejectWithValue }) => {
+export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValue }) => {
   try {
-    const response = await axiosInstance.post('/auth/logout');
+    const response = await axiosInstance.post('auth/logout');
     return response.data;
   } catch (error) {
     return rejectWithValue('Error during logout');
   }
 });
 
-export const updateProfile = createAsyncThunk('/auth/UpdateProfile', async (data, { rejectWithValue }) => {
+export const updateProfile = createAsyncThunk('auth/UpdateProfile', async (data, { rejectWithValue }) => {
   try {
-    const response = await axiosInstance.put('/auth/UpdateProfile', data, { withCredentials: true });
+    const response = await axiosInstance.put('auth/UpdateProfile', data, { withCredentials: true });
     return response.data;
    
   } catch (error) {

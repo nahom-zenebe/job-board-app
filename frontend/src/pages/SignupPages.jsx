@@ -32,14 +32,14 @@ const handlesignup=(e)=>{
   dispatch( signup({name,email,password,role,uploadedFile}))
   .unwrap()
   .then(()=>{
-    if(role==='seeker'){
+    
       navigate('/MainDashboard');
     }
 
-    navigate('/RecruiterDashboard');
+   
    
 
-  })
+  )
   .catch((error) => {
     toast.error(error || 'Signup failed');
   });

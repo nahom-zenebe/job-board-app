@@ -21,8 +21,10 @@ import { useSelector } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+
 function App() {
-  const {  authUser } = useSelector((state) => state.auth);
+
+ 
   return (
     <Router>
       <Navbar />
@@ -33,21 +35,24 @@ function App() {
         <Route path="/service" element={<Service />} />
         <Route path="/signup" element={<SignupPages/>}/>
         <Route path="login" element={<LoginPages/>}/>
-        {authUser?.user?.seeker? (<Route path="/MainDashboard" element={<MainDashboard/>}>
-        <Route path="/MainDashboard/UpdateProfile" element={<UpdateProfile/>}/>
-        <Route path="/MainDashboard/Searchjobs" element={<Searchjobs/>}/>
-        <Route path="/MainDashboard/MyApplication" element={<MyApplication/>}/>
-        <Route path="/MainDashboard/NewJob" element={<NewJob/>}/>
-        <Route path="/MainDashboard/AccountSetting" element={<AccountSetting/>}/>
-      </Route>):(<Route path="/RecruiterDashboard " element={<RecruiterDashboard />}>
+        
+      <Route path="/MainDashboard" element={<MainDashboard/>}>
+        <Route path="UpdateProfile" element={<UpdateProfile/>}/>
+        <Route path="Searchjobs" element={<Searchjobs/>}/>
+        <Route path="MyApplication" element={<MyApplication/>}/>
+        <Route path="NewJob" element={<NewJob/>}/>
+        <Route path="AccountSetting" element={<AccountSetting/>}/>
+      </Route>
+      <Route path="/RecruiterDashboard " element={<RecruiterDashboard />}>
         <Route path="UpdateRecruiterProfile" element={<UpdateRecruiterProfile/>}/>
         <Route path="Postingjob" element={<Postingjob/>}/>
         <Route path="Applications" element={<Applications/>}/>
         <Route path="RecruiterAccountSetting" element={<RecruiterAccountSetting/>}/>
-      </Route>)}
+      </Route>
+      </Routes>
        
      
-      </Routes>
+      
 
       <Footer /> 
       <Toaster />

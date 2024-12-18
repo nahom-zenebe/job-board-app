@@ -2,7 +2,7 @@ import React from 'react'
 
 function RecruiterAccountSetting() {
   return (
-    <div>RecruiterAccountSetting</div>
+    <div className='mt-56'>RecruiterAccountSettingemfnewmfekwmewk</div>
   )
 }
 

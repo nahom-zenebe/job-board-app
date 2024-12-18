@@ -5,7 +5,15 @@ import {  useSelector } from 'react-redux';
 
 function Sidebar() {
   const {  authUser } = useSelector((state) => state.auth);
+  console.log("authUser:", authUser);
   
+
+  if (!authUser) {
+    return <div>Loading...</div>; // Or redirect to login if needed
+ 
+  }
+
+
   return (
     <div className="w-64 h-auto p-6 bg-white shadow-2xl rounded-2xl ml-10">
     
@@ -28,22 +36,22 @@ function Sidebar() {
         <ul className="space-y-4  pb-6">
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
            
-         {authUser.user.seeker?<Link to='/MainDashboard/UpdateProfile'>Edit Profile</Link> :<Link to='/UpdateRecruiterProfile'>Edit Profile</Link> } 
+         {authUser.user.role==="seeker"?<Link to='/MainDashboard/UpdateProfile'>Edit Profile</Link> :<Link to='/RecruiterDashboard/UpdateRecruiterProfile'>Edit Profile</Link> } 
           </li>
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
-          {authUser.user.seeker?<Link to='/MainDashboard/Searchjobs'>Search Jobs</Link> :<Link to='/Postingjob'>Postingjob</Link> } 
+          {authUser.user.role==="seeker"?<Link to='/MainDashboard/Searchjobs'>Search Jobs</Link> :<Link to='/RecruiterDashboard/Postingjob'>Postingjob</Link> } 
    
           </li>
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
-          {authUser.user.seeker?<Link to='/MainDashboard/MyApplication'> My Applications</Link> :<Link to='/"Applications'>Applications</Link> } 
+          {authUser.user.role==="seeker"?<Link to='/MainDashboard/MyApplication'> My Applications</Link> :<Link to='/RecruiterDashboard/Applications'>Applications</Link> } 
           
           </li>
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
     
-          <Link to='/MainDashboard/NewJob'>NewJobs</Link> 
+          {authUser.user.role==="seeker"?<Link to='/MainDashboard/NewJob'>NewJobs</Link>  :<Link to='/RecruiterDashboard/Applications'>Applications</Link> }  
           </li>
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
-          {authUser.user.seeker?<Link to='/MainDashboard/AccountSetting'>Account Settings</Link> :<Link to='/RecruiterAccountSetting'>AccountSetting</Link> } 
+          {authUser.user.role==="seeker"?<Link to='/MainDashboard/AccountSetting'>Account Settings</Link> :<Link to='/RecruiterDashboard/RecruiterAccountSetting'>AccountSetting</Link> } 
           
             
           </li>
