@@ -42,12 +42,12 @@ function App() {
         <Route path="NewJob" element={<NewJob/>}/>
         <Route path="AccountSetting" element={<AccountSetting/>}/>
       </Route>
-      <Route path="/RecruiterDashboard " element={<RecruiterDashboard />}>
-        <Route path="UpdateRecruiterProfile" element={<UpdateRecruiterProfile/>}/>
-        <Route path="Postingjob" element={<Postingjob/>}/>
-        <Route path="Applications" element={<Applications/>}/>
-        <Route path="RecruiterAccountSetting" element={<RecruiterAccountSetting/>}/>
-      </Route>
+      <Route path="/RecruiterDashboard" element={<RecruiterDashboard />}>
+  <Route path="UpdateRecruiterProfile" element={<UpdateRecruiterProfile />} />
+  <Route path="Postingjob" element={<Postingjob />} />
+  <Route path="Applications" element={<Applications />} />
+  <Route path="RecruiterAccountSetting" element={<RecruiterAccountSetting />} />
+   </Route>
       </Routes>
        
      
