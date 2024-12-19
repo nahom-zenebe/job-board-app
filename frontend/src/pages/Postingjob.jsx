@@ -2,10 +2,11 @@ import React from 'react'
 
 function Postingjob() {
   return (
-    <div className='bg-white w-full h-screen'>
-      <h1>heelo </h1>
-      <div>
-    </div></div>
+    <div className="h-screen bg-white w-full  rounded-2xl shadow-2xl ">
+    <div className='mt-10'></div>
+    
+    
+    </div>
   )
 }
 

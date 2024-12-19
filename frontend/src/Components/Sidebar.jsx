@@ -1,16 +1,38 @@
 import React from 'react';
 import avatar from '../images/avatar.png';
 import { Link } from 'react-router-dom';
-import {  useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../feature/authSlice';
+import { useNavigate } from 'react-router-dom';
+
 
 function Sidebar() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {  authUser } = useSelector((state) => state.auth);
   console.log("authUser:", authUser);
+
   
 
   if (!authUser) {
     return <div>Loading...</div>; // Or redirect to login if needed
  
+  }
+
+  const handleLogout=()=>{
+    dispatch (logout())
+    .then(()=>{
+    
+      navigate('/');
+    }
+
+   
+   
+
+  )
+  .catch((error) => {
+    console.error(error || 'Signup failed');
+  });
   }
 
 
@@ -27,7 +49,7 @@ function Sidebar() {
           {authUser.user.name}
           
         </h1>
-        <p className="text-sm text-gray-500">Software Engineer</p>
+        <p className="text-sm text-gray-500">{authUser.user.role==="seeker"? (<h1 className='text-lg'>seeker</h1>):(<h1 className='text-lg'>Recruiter</h1>)}</p>
       </div>
       <hr className='mt-4'></hr>
 
@@ -55,7 +77,7 @@ function Sidebar() {
           
             
           </li>
-          <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
+          <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out" onClick={handleLogout}>
     
           Logout
           </li>

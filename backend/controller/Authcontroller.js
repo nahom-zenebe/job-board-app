@@ -111,7 +111,7 @@ res.status(201).json({
 }
 module.exports.logout=async(req,res)=>{
   try {
-       res.cookie("Job-posting-app",'',{maxAge:0})
+       res.cookie("Jobpostingapp",'',{maxAge:0})
        res.status(200).json({message:"Logged out successfully"})
 
     

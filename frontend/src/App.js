@@ -17,7 +17,6 @@ import UpdateRecruiterProfile from './pages/UpdateRecruiterProfile';
 import RecruiterDashboard from './pages/RecruiterDashboard';
 import AccountSetting from './pages/AccountSetting';
 import Searchjobs from './pages/Searchjobs';
-import { useSelector } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 

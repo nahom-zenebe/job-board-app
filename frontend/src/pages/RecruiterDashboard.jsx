@@ -6,7 +6,7 @@ function RecruiterDashboard() {
     <div className='mt-32'>   
         <Sidebar/>
      <div className="flex-1 ml-16 mr-10">
-        <Outlet /> 
+        <Outlet/> 
       
       </div>
       </div>
