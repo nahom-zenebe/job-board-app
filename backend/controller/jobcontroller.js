@@ -6,8 +6,8 @@ const  Job=require('../models/JobPostingsmodel')
 
 const createjobposting=async(req,res)=>{
     try {
-        const{ title,company,description, Salary, location, role,experienceLevel,recruiter} =req.body
-        if (!title || !company || !description|| !Salary || !location || !role || !experienceLevel||! recruiter) {
+        const{ title,company,description, Salary, location,experienceLevel,recruiter,role} =req.body
+        if (!title || !company || !description|| !Salary || !location || !experienceLevel||! recruiter||!role) {
             return res.status(400).json({ message: "All fields are required" });
         }
         const newjobPosting=new Job({title,company,description, Salary, location, role,experienceLevel,recruiter})

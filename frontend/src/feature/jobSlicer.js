@@ -8,11 +8,21 @@ import toast from 'react-hot-toast';
 
 const initialState={
     alljobposting:null,
+    isJobcreate:false,
     isallJobget:false,
 
 
 }
 
+export const createjob=createAsyncThunk('/job/posts-job',async(data,{rejectWithValue})=>{
+  try {
+    const createdJob=await axiosInstance.post('/job/posts-job',data)
+    return createdJob.data
+    
+  } catch (error) {
+    return rejectWithValue('Error during create job');
+  }
+})
 
 export const getalljob=createAsyncThunk('/job/alljobposting',async(data,{rejectWithValue })=>{
   try{
@@ -45,6 +55,20 @@ const jobSlice=createSlice({
             state.isallJobget= false;
            toast.error(action.payload || 'Error during signup');
 
+        })
+        builder.addCase(createjob.pending,(state,action)=>{
+          state.isJobcreate=true
+          toast.success('Account Created Successfully');
+
+        })
+        builder.addCase(createjob.fulfilled,(state,action)=>{
+          state.isJobcreate=false
+          toast.success('job application created Successfully');
+
+        })
+        builder.addCase(createjob.rejected,(state,action)=>{
+          state.isJobcreate=false
+          toast.error(action.payload || 'Error during signup');
         })
 
     }
