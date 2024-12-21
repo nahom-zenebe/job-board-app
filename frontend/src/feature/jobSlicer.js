@@ -73,6 +73,17 @@ const jobSlice=createSlice({
           state.isJobcreate=false
           toast.error(action.payload || 'Error during job creating');
         })
+        builder.addCase(getalljob.pending,(state)=>{
+            state.alljobposting=true
+        })
+        builder.addCase(getalljob.fulfilled,(state,action)=>{
+          state.isallJobget=false
+          state.alljobposting=action.payload
+      })
+      builder.addCase(getalljob.rejected,(state)=>{
+        state.isallJobget=false
+        
+    })
 
     }
     
