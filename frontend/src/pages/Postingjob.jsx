@@ -1,24 +1,27 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { createjob } from '../feature/jobSlicer';  // Assuming the action is correctly defined in your jobSlicer
+import { createjob } from '../feature/jobSlicer';
 
 function PostingJob() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isJobcreate} = useSelector((state) => state.job);  // Assuming state includes isJobcreate and error states
-  const { authUser} = useSelector((state) => state.auth);
+  const { authUser } = useSelector((state) => state.auth);
+  const { isJobcreate } = useSelector((state) => state.job);
+  const [recruiter, setRecruiter] = useState(authUser?.user?._id || null);  // Ensure recruiter ID is available
+ console.log(authUser)
   const [formData, setFormData] = useState({
-    jobTitle: '',
-    companyName: '',
-    location: '',
-    experienceLevel: '',
-    salary: '',
-    jobDescription: '',
-    recruiter: authUser?.user?.id,
-     role: 'recruiter'
+    title: '', // Job Title
+    company: '', // Company Name
+    location: '', // Job Location
+    experienceLevel: '', // Experience Level
+    Salary: '', // Salary
+    description: '', // Job Description
+    recruiter: authUser?.user?.id || null, // Recruiter ID
+    role: 'recruiter', // Fixed Role
   });
 
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -26,14 +29,14 @@ function PostingJob() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     dispatch(createjob(formData))
+    .unwrap()
       .then(() => {
-       
         navigate('/RecruiterDashboard');
       })
       .catch((error) => {
-        console.log(error);
+        console.error('Job creation error:', error);
       });
   };
 
@@ -45,14 +48,14 @@ function PostingJob() {
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
             <div className="flex flex-col">
-              <label htmlFor="jobTitle" className="text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="title" className="text-sm font-medium text-gray-700 mb-2">
                 Job Title
               </label>
               <input
                 type="text"
-                id="jobTitle"
-                name="jobTitle"
-                value={formData.jobTitle}
+                id="title"
+                name="title"
+                value={formData.title}
                 onChange={handleChange}
                 className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                 placeholder="Enter job title"
@@ -60,14 +63,14 @@ function PostingJob() {
               />
             </div>
             <div className="flex flex-col">
-              <label htmlFor="companyName" className="text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="company" className="text-sm font-medium text-gray-700 mb-2">
                 Company Name
               </label>
               <input
                 type="text"
-                id="companyName"
-                name="companyName"
-                value={formData.companyName}
+                id="company"
+                name="company"
+                value={formData.company}
                 onChange={handleChange}
                 className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                 placeholder="Enter company name"
@@ -93,51 +96,49 @@ function PostingJob() {
               />
             </div>
             <div className="flex flex-col">
-              <label htmlFor="jobType" className="text-sm font-medium text-gray-700 mb-2">
-              experienceLevel
+              <label htmlFor="experienceLevel" className="text-sm font-medium text-gray-700 mb-2">
+                Experience Level
               </label>
               <select
-                id="jobType"
-                name="jobType"
-                value={formData.experienceLevel}
-                onChange={handleChange}
-                className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                required
-              >
-                <option value="">Select experience level</option>
-                <option value="full-time">Full-Time</option>
-                <option value="part-time">Part-Time</option>
-                <option value="contract">Contract</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-            <div className="flex flex-col">
-              <label htmlFor="salary" className="text-sm font-medium text-gray-700 mb-2">
-                Salary (per year)
-              </label>
-              <input
-                type="number"
-                id="salary"
-                name="salary"
-                value={formData.salary}
-                onChange={handleChange}
-                className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                placeholder="Enter salary"
-                required
-              />
+  id="experienceLevel"
+  name="experienceLevel"
+  value={formData.experienceLevel}
+  onChange={handleChange}
+  className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+  required
+>
+  <option value="">Select experience level</option>
+  <option value="Entry">Entry</option>
+  <option value="Mid">Mid</option>
+  <option value="Senior">Senior</option>
+</select>
             </div>
           </div>
 
           <div className="flex flex-col mb-6">
-            <label htmlFor="jobDescription" className="text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="Salary" className="text-sm font-medium text-gray-700 mb-2">
+              Salary (per year)
+            </label>
+            <input
+              type="number"
+              id="Salary"
+              name="Salary"
+              value={formData.Salary}
+              onChange={handleChange}
+              className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              placeholder="Enter salary"
+              required
+            />
+          </div>
+
+          <div className="flex flex-col mb-6">
+            <label htmlFor="description" className="text-sm font-medium text-gray-700 mb-2">
               Job Description
             </label>
             <textarea
-              id="jobDescription"
-              name="jobDescription"
-              value={formData.jobDescription}
+              id="description"
+              name="description"
+              value={formData.description}
               onChange={handleChange}
               className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               placeholder="Enter job description"
@@ -148,8 +149,8 @@ function PostingJob() {
 
           <button
             type="submit"
-            className="w-full p-4 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none  focus:ring-2 focus:ring-blue-500"
-            disabled={isJobcreate} // Disable button when loading
+            className="w-full p-4 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            disabled={isJobcreate}
           >
             {isJobcreate ? 'Posting...' : 'Post Job'}
           </button>

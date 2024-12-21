@@ -24,8 +24,8 @@ app.use(cors({
   }));
   
 app.use('/api/auth',AuthRoutes)
-app.use('/api/job',Jobposting)
 app.use('/api/recruiter',recruiterRoutes)
+app.use('/api/job',Jobposting)
 app.use('/api/applications', applicationRoutes);
 
 

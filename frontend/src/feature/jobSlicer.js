@@ -14,23 +14,26 @@ const initialState={
 
 }
 
-export const createjob=createAsyncThunk('/job/posts-job',async(data,{rejectWithValue})=>{
-  try {
-    const createdJob=await axiosInstance.post('/job/posts-job',data)
-    return createdJob.data
-    
-  } catch (error) {
-    return rejectWithValue('Error during create job');
+export const createjob = createAsyncThunk(
+  'job/postsjob',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post('job/postsjob', data, { withCredentials: true });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || 'Error during job creation');
+    }
   }
-})
+);
 
-export const getalljob=createAsyncThunk('/job/alljobposting',async(data,{rejectWithValue })=>{
+export const getalljob=createAsyncThunk('job/alljobposting',async(data,{rejectWithValue })=>{
   try{
-    const jobposting=await axiosInstance.get('/job/alljobposting',data)
+    const jobposting=await axiosInstance.get('job/alljobposting',data)
     return jobposting.data
   }
   catch(error){
-    return rejectWithValue('Error during logout');
+    console.error("Error details:", error); // Log the full error
+    
   }
 
 
@@ -56,19 +59,19 @@ const jobSlice=createSlice({
            toast.error(action.payload || 'Error during signup');
 
         })
-        builder.addCase(createjob.pending,(state,action)=>{
+        builder.addCase(createjob.pending,(state)=>{
           state.isJobcreate=true
-          toast.success('Account Created Successfully');
+     
 
         })
-        builder.addCase(createjob.fulfilled,(state,action)=>{
+        builder.addCase(createjob.fulfilled,(state)=>{
           state.isJobcreate=false
           toast.success('job application created Successfully');
 
         })
         builder.addCase(createjob.rejected,(state,action)=>{
           state.isJobcreate=false
-          toast.error(action.payload || 'Error during signup');
+          toast.error(action.payload || 'Error during job creating');
         })
 
     }
