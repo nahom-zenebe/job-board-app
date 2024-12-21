@@ -3,7 +3,7 @@ import { axiosInstance } from '../libs/axios';
 import toast from 'react-hot-toast';
 
 const initialState = {
-  authUser: null,
+  authUser: JSON.parse(localStorage.getItem('authUser')) || null,
   token: null,
   isSigningup: false,
   isLogging: false,
@@ -62,6 +62,7 @@ const authSlice = createSlice({
     });
     builder.addCase(signup.fulfilled, (state, action) => {
       state.authUser = action.payload;
+      localStorage.setItem('authUser', JSON.stringify(action.payload));
       state.isSigningup = false;
       toast.success('Account Created Successfully');
     });
@@ -75,6 +76,7 @@ const authSlice = createSlice({
     });
     builder.addCase(login.fulfilled, (state, action) => {
       state.authUser = action.payload;
+      localStorage.setItem('authUser', JSON.stringify(action.payload.user));
       state.isLogging = false;
       toast.success('Logged in Successfully');
     });
@@ -90,6 +92,7 @@ const authSlice = createSlice({
       state.authUser = null;
       state.token = null;
       state.loading = false;
+      localStorage.removeItem('authUser');
       toast.success('Logged out Successfully');
     });
     builder.addCase(logout.rejected, (state, action) => {
@@ -103,6 +106,7 @@ const authSlice = createSlice({
     builder.addCase(updateProfile.fulfilled, (state, action) => {
       state.authUser = action.payload;
       state.isUpdatingProfile = false;
+      localStorage.setItem('authUser', JSON.stringify(action.payload));
       toast.success('Profile updated successfully');
     });
     builder.addCase(updateProfile.rejected, (state, action) => {

@@ -26,20 +26,15 @@ export const createjob = createAsyncThunk(
   }
 );
 
-export const getalljob=createAsyncThunk('job/alljobposting',async(data,{rejectWithValue })=>{
-  try{
-    const jobposting=await axiosInstance.get('job/alljobposting',data,{ withCredentials: true })
-    return jobposting.data
+export const getalljob = createAsyncThunk('job/alljobposting', async (_, { rejectWithValue }) => {
+  try {
+    const response = await axiosInstance.get('job/alljobposting', { withCredentials: true });
+    return response.data; 
+  } catch (error) {
+    console.error("Error fetching jobs:", error); 
+    return rejectWithValue(error.response?.data?.message || 'Failed to fetch jobs'); // Return error details
   }
-  catch(error){
-    console.error("Error details:", error); 
-    
-  }
-
-
-
-})
-
+});
 
 
 const jobSlice=createSlice({
