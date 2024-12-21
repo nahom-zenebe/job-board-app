@@ -14,10 +14,6 @@ function Sidebar() {
 
   
 
-  if (!authUser) {
-    return <div>Loading...</div>; // Or redirect to login if needed
- 
-  }
 
   const handleLogout=()=>{
     dispatch (logout())

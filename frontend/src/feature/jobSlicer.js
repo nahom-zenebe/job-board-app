@@ -28,11 +28,11 @@ export const createjob = createAsyncThunk(
 
 export const getalljob=createAsyncThunk('job/alljobposting',async(data,{rejectWithValue })=>{
   try{
-    const jobposting=await axiosInstance.get('job/alljobposting',data)
+    const jobposting=await axiosInstance.get('job/alljobposting',data,{ withCredentials: true })
     return jobposting.data
   }
   catch(error){
-    console.error("Error details:", error); // Log the full error
+    console.error("Error details:", error); 
     
   }
 
@@ -58,32 +58,22 @@ const jobSlice=createSlice({
             state.isallJobget= false;
            toast.error(action.payload || 'Error during signup');
 
-        })
+        });
         builder.addCase(createjob.pending,(state)=>{
           state.isJobcreate=true
      
 
-        })
+        });
         builder.addCase(createjob.fulfilled,(state)=>{
           state.isJobcreate=false
           toast.success('job application created Successfully');
 
-        })
+        });
         builder.addCase(createjob.rejected,(state,action)=>{
           state.isJobcreate=false
           toast.error(action.payload || 'Error during job creating');
-        })
-        builder.addCase(getalljob.pending,(state)=>{
-            state.alljobposting=true
-        })
-        builder.addCase(getalljob.fulfilled,(state,action)=>{
-          state.isallJobget=false
-          state.alljobposting=action.payload
-      })
-      builder.addCase(getalljob.rejected,(state)=>{
-        state.isallJobget=false
+        });
         
-    })
 
     }
     

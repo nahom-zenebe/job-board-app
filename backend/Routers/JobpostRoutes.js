@@ -4,7 +4,7 @@ const { authmiddleware,recruitermiddleware} = require('../middleware/Authmiddlew
 const {createjobposting, getallpostedjob,getEarlypostedjob,UpdateJobPosting} = require('../controller/jobcontroller');
 
 router.post('/postsjob',createjobposting)
-router.get('/alljobposting',authmiddleware,getallpostedjob)
+router.get('/alljobposting',getallpostedjob)
 router.get('/recentjob',authmiddleware,getEarlypostedjob)
 router.put('/updatejob/:Id',authmiddleware,recruitermiddleware,UpdateJobPosting)
 

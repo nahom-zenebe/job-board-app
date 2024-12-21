@@ -1,23 +1,32 @@
 
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import JobSkeletion from '../skeletons/JobSkeletion'
+import { getalljob } from '../feature/jobSlicer';
+
 
 function SearchJobs() {
-  const { getalljob } = useSelector((state) => state.job);
-  const [jobData, setJobData] = useState(getalljob);
-  console.log(getalljob)
+  const { alljobposting, isallJobget } = useSelector((state) => state.job);
+const [jobData, setJobData] = useState(alljobposting || []); 
+const dispatch = useDispatch();
 
-  const handleApply = (job) => {
-    // Logic for applying to the job (e.g., navigate to application page or trigger apply API)
-    console.log(`Applied to job: ${job.title}`);
-  };
+useEffect(() => {
+  
+  if (!alljobposting) {
+    dispatch(getalljob());
+  }
+}, [dispatch, alljobposting]);
 
-  const handleViewDetails = (job) => {
-    // Logic for viewing the job details (e.g., navigate to job detail page)
-    console.log(`View details for job: ${job.title}`);
-  };
+console.log(jobData); 
+
+if( isallJobget){
+  return <JobSkeletion/>
+
+}
+  
 
   return (
-    <div className="h-screen bg-white w-full rounded-2xl shadow-2xl p-6">
+    <div className="h-screen bg-white w-full rounded-2xl shadow-2xl p-6 overflow-auto">
       <h2 className="text-2xl font-semibold text-center mb-6">Job Listings</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
