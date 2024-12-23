@@ -3,11 +3,15 @@ import React, { useState ,useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import JobSkeletion from '../skeletons/JobSkeletion'
 import { getalljob } from '../feature/jobSlicer';
+import toast from 'react-hot-toast';
+import { Pin } from 'lucide-react';
+
 
 
 function SearchJobs() {
   const { alljobposting, isallJobget } = useSelector((state) => state.job);
 const [jobData, setJobData] = useState(alljobposting || []); 
+const[givenpin,setGivenPin]=useState(false)
 const dispatch = useDispatch();
 
 console.log(alljobposting )
@@ -25,7 +29,21 @@ if( isallJobget){
   return <JobSkeletion/>
 
 }
-  
+const handlePin = () => {
+ 
+  setGivenPin(prevState => {
+    const newState = !prevState;
+    
+    
+    if (newState) {
+      toast.success("add to saved job");
+    } else {
+      toast.error("Remove from saved job");
+    }
+
+    return newState;
+  });
+};
 
   return (
     <div className="h-screen bg-white w-full  rounded-2xl shadow-2xl p-6 overflow-auto">
@@ -34,7 +52,7 @@ if( isallJobget){
       <div className="grid grid-cols-1 mt-40 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {jobData.map((job, index) => (
           <div key={index} className="bg-white border rounded-lg shadow-lg p-4">
-            <h3 className="text-xl font-semibold text-gray-800">{job.title}</h3>
+            <div className='flex justify-between'><h3 className="text-xl font-semibold text-gray-800">{job.title}</h3><Pin onClick={handlePin} color={givenpin ? "green" : "gray"} size={32}/></div>
             <p className="text-gray-600">{job.company}</p>
             <p className="text-gray-500 mt-2">{job.description}</p>
             <div className="mt-4">
