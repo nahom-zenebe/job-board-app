@@ -9,6 +9,7 @@ import LoginPages from "./pages/LoginPages";
 import UpdateProfile from './pages/UpdateProfile';
 import MyApplication from './pages/MyApplication';
 import MainDashboard from './pages/MainDashboard';
+import Applicationform from './pages/Applicationform.jsx'
 import SavedJob from './pages/SavedJob.jsx';
 import Postingjob from './pages/Postingjob';
 import Applications from './pages/Applications';
@@ -40,6 +41,7 @@ function App() {
         <Route path="Searchjobs" element={<Searchjobs/>}/>
         <Route path="MyApplication" element={<MyApplication/>}/>
         <Route path="SavedJob" element={<SavedJob/>}/>
+        <Route path="Applicationform" element={<Applicationform/>}/>
         <Route path="AccountSetting" element={<AccountSetting/>}/>
       </Route>
       <Route path="/RecruiterDashboard" element={<RecruiterDashboard />}>

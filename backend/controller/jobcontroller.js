@@ -87,5 +87,28 @@ const UpdateJobPosting=async(req,res)=>{
         }
             
 }
+const pindata=async(req,res)=>{
+    const {jobId}=req.params
+    try {
+        const job=await Job.findById(jobId)
+        if(!job){
+            return res.status(404).json({ message: 'Job not found' });
+            
+        }
+    
+        job.pinned=!job.pinned
+        await Job.save()
 
-    module.exports={createjobposting, getallpostedjob,getEarlypostedjob,UpdateJobPosting}
+        res.json({ 
+            message: Job.pinned ? 'Job pinned successfully' : 'Job unpinned successfully', 
+            pinned: Job.pinned,
+            job 
+          });
+        
+    } catch (error) {
+        res.status(500).json({ message: 'Error pinning/unpinning job', error: err.message });
+        
+    }
+
+}
+    module.exports={createjobposting,pindata,getallpostedjob,getEarlypostedjob,UpdateJobPosting}

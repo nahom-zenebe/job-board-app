@@ -3,8 +3,10 @@ import React, { useState ,useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import JobSkeletion from '../skeletons/JobSkeletion'
 import { getalljob } from '../feature/jobSlicer';
-import toast from 'react-hot-toast';
+
 import { Pin } from 'lucide-react';
+import { pinJob } from '../feature/jobSlicer'; 
+import { Link } from 'react-router-dom';
 
 
 
@@ -23,26 +25,14 @@ useEffect(() => {
   }
 }, [dispatch, alljobposting]);
 
-console.log(jobData); 
+ 
 
 if( isallJobget){
   return <JobSkeletion/>
 
 }
-const handlePin = () => {
- 
-  setGivenPin(prevState => {
-    const newState = !prevState;
-    
-    
-    if (newState) {
-      toast.success("add to saved job");
-    } else {
-      toast.error("Remove from saved job");
-    }
-
-    return newState;
-  });
+const handlePin = (jobId) => {
+  dispatch(pinJob(jobId));
 };
 
   return (
@@ -52,7 +42,7 @@ const handlePin = () => {
       <div className="grid grid-cols-1 mt-40 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {jobData.map((job, index) => (
           <div key={index} className="bg-white border rounded-lg shadow-lg p-4">
-            <div className='flex justify-between'><h3 className="text-xl font-semibold text-gray-800">{job.title}</h3><Pin onClick={handlePin} color={givenpin ? "green" : "gray"} size={32}/></div>
+            <div className='flex justify-between'><h3 className="text-xl font-semibold text-gray-800">{job.title}</h3><Pin onClick={() => handlePin(alljobposting._id)}/></div>
             <p className="text-gray-600">{job.company}</p>
             <p className="text-gray-500 mt-2">{job.description}</p>
             <div className="mt-4">
@@ -65,12 +55,12 @@ const handlePin = () => {
             </div>
 
             <div className="flex justify-between mt-10 mb-5">
-              <button
-               
-                className="bg-blue-500 w-32 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+              <Link to='/MainDashboard/Applicationform'
+               className="bg-blue-500 w-32 text-white px-4 py-2 rounded-md hover:bg-blue-600"
               >
                 Apply
-              </button>
+                </Link>
+             
               <button
               
                 className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400"

@@ -10,10 +10,21 @@ const initialState={
     alljobposting:null,
     isJobcreate:false,
     isallJobget:false,
+    isPinJob:false,
 
 
 }
 
+export const pinJob=createAsyncThunk(
+  `/pindata/:jobId`,async(jobId,{rejectWithValue})=>{
+    try {
+      const response = await axiosInstance.post(`/pindata/${jobId}`, {}, { withCredentials: true });
+      return response.data
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || 'Error pinning job');
+    }
+  }
+)
 export const createjob = createAsyncThunk(
   'job/postsjob',
   async (data, { rejectWithValue }) => {
@@ -40,7 +51,9 @@ export const getalljob = createAsyncThunk('job/alljobposting', async (_, { rejec
 const jobSlice=createSlice({
     name:'job',
     initialState,
-    reducers:{},
+    reducers:{
+      
+    },
     extraReducers:(builder)=>{
         builder.addCase(getalljob.pending,(state)=>{
             state.isallJobget=true
@@ -68,6 +81,23 @@ const jobSlice=createSlice({
           state.isJobcreate=false
           toast.error(action.payload || 'Error during job creating');
         });
+        builder.addCase(pinJob.pending, (state)=>{
+          state.isPinJob=true
+        })
+
+        builder.addCase(pinJob.fulfilled, (state,action)=>{
+          state.isPinJob=false
+          const updatedJob = action.payload.job; 
+      state.alljobposting = state.alljobposting.map((job) =>
+        job.id === updatedJob.id ? { ...job, pinned: updatedJob.pinned } : job
+      );
+          toast.success(updatedJob.pinned ? 'Job pinned successfully' : 'Job unpinned successfully');
+        })
+
+        builder.addCase(pinJob.rejected, (state,action)=>{
+          state.isPinJob = false;
+          toast.error(action.payload || 'Error pinning job');
+        })
         
 
     }

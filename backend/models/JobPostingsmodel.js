@@ -54,6 +54,10 @@ const jobSchema=new mongoose.Schema({
         required:true
         
         
+    },
+    pinned:{
+        type:Boolean,
+        default:false
     }
 },{
     timestamps:true
