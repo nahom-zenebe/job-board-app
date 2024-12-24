@@ -41,7 +41,7 @@ function App() {
         <Route path="Searchjobs" element={<Searchjobs/>}/>
         <Route path="MyApplication" element={<MyApplication/>}/>
         <Route path="SavedJob" element={<SavedJob/>}/>
-        <Route path="Applicationform" element={<Applicationform/>}/>
+        <Route path="/MainDashboard/Applicationform/:jobid" element={<Applicationform/>}/>
         <Route path="AccountSetting" element={<AccountSetting/>}/>
       </Route>
       <Route path="/RecruiterDashboard" element={<RecruiterDashboard />}>

@@ -1,23 +1,39 @@
 import React, { useState } from 'react';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { AppForm } from '../feature/applications'; 
+
+import { useNavigate } from 'react-router-dom';
+
+
+
+
+
+
 const Applicationform = () => {
+  const { isApplicationCreated,Application } = useSelector((state) => state.Application);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     phone: '',
     location:'',
-    seeker: '',
     coverLetter: '',
     Education: '',
  
   });
+  const {  authUser } = useSelector((state) => state.auth);
+
+
+  const dispatch = useDispatch();
 
   const [errors, setErrors] = useState({});
 
-  // Handle input changes
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
+
     });
   };
 
@@ -39,7 +55,15 @@ const Applicationform = () => {
     // If no errors, submit the form data (you can call an API here)
     if (Object.keys(newErrors).length === 0) {
       console.log('Form Submitted:', formData);
-      // You can also make an API request here
+      dispatch(AppForm(authUser._id,formData))
+      .unwrap()
+      .then(() => {
+        navigate('/');
+      })
+      .catch((error) => {
+        console.error('Applications creation error:', error);
+      });
+      
     }
   };
 
@@ -62,11 +86,11 @@ const Applicationform = () => {
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="seeker" className="block text-sm font-medium text-gray-700">Location</label>
+          <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location</label>
           <input
             type="text"
-            id="seeker"
-            name="seeker"
+            id="location"
+            name="location"
             value={formData.location}
             onChange={handleChange}
             placeholder="Enter your Location"

@@ -6,12 +6,13 @@ import { getalljob } from '../feature/jobSlicer';
 
 import { Pin } from 'lucide-react';
 import { pinJob } from '../feature/jobSlicer'; 
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 
 
 function SearchJobs() {
-  const { alljobposting, isallJobget } = useSelector((state) => state.job);
+  const {jobId}=useParams()
+const { alljobposting, isallJobget } = useSelector((state) => state.job);
 const [jobData, setJobData] = useState(alljobposting || []); 
 const[givenpin,setGivenPin]=useState(false)
 const dispatch = useDispatch();
@@ -55,7 +56,7 @@ const handlePin = (jobId) => {
             </div>
 
             <div className="flex justify-between mt-10 mb-5">
-              <Link to='/MainDashboard/Applicationform'
+              <Link to={`/MainDashboard/Applicationform/${alljobposting._id}`}
                className="bg-blue-500 w-32 text-white px-4 py-2 rounded-md hover:bg-blue-600"
               >
                 Apply

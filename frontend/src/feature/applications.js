@@ -12,8 +12,8 @@ const initialState={
 }
 
 
-export const AppForm=createAsyncThunk('/applications/applicationForm',async(data,{ rejectWithValue })=>{
-    const reponse=await axiosInstance.post('/applications/applicationForm',data,{ rejectWithValue })
+export const AppForm=createAsyncThunk('/applications/applicationForm/jobId',async({ JobId, data },{ rejectWithValue })=>{
+    const reponse=await axiosInstance.post(`/applications/applicationForm/${JobId}`,data,{ rejectWithValue })
      return reponse.data
 })
   
