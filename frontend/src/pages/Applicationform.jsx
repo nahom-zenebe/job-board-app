@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 
 const Applicationform = () => {
   const [formData, setFormData] = useState({
-    job: '',
+    phone: '',
+    location:'',
     seeker: '',
     coverLetter: '',
-    status: '',
-    appliedAt: '',
+    Education: '',
+ 
   });
 
   const [errors, setErrors] = useState({});
@@ -27,11 +28,11 @@ const Applicationform = () => {
     const newErrors = {};
 
     // Check if all required fields are filled out
-    if (!formData.job) newErrors.job = 'Job field is required';
-    if (!formData.seeker) newErrors.seeker = 'Seeker field is required';
+    if (!formData.phone) newErrors.phone = 'phone field is required';
+    if (!formData.location) newErrors.location= 'location field is required';
     if (!formData.coverLetter) newErrors.coverLetter = 'Cover letter is required';
-    if (!formData.status) newErrors.status = 'Status field is required';
-    if (!formData.appliedAt) newErrors.appliedAt = 'Applied date is required';
+    if (!formData.Education) newErrors.status = 'Education field is required';
+    
 
     setErrors(newErrors);
 
@@ -47,31 +48,31 @@ const Applicationform = () => {
       <h2 className="text-2xl font-semibold text-center mb-6">Job Application Form</h2>
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div className="space-y-2">
-          <label htmlFor="job" className="block text-sm font-medium text-gray-700">Job</label>
+          <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone</label>
           <input
             type="text"
-            id="job"
-            name="job"
-            value={formData.job}
+            id="phone"
+            name="phone"
+            value={formData.phone}
             onChange={handleChange}
-            placeholder="Enter the job title"
+            placeholder="Enter the Phone number"
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
-          {errors.job && <span className="text-sm text-red-600">{errors.job}</span>}
+          {errors.phone&& <span className="text-sm text-red-600">{errors.phone}</span>}
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="seeker" className="block text-sm font-medium text-gray-700">Seeker</label>
+          <label htmlFor="seeker" className="block text-sm font-medium text-gray-700">Location</label>
           <input
             type="text"
             id="seeker"
             name="seeker"
-            value={formData.seeker}
+            value={formData.location}
             onChange={handleChange}
-            placeholder="Enter your name"
+            placeholder="Enter your Location"
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
-          {errors.seeker && <span className="text-sm text-red-600">{errors.seeker}</span>}
+          {errors.location && <span className="text-sm text-red-600">{errors.location}</span>}
         </div>
 
         <div className="space-y-2">
@@ -88,34 +89,26 @@ const Applicationform = () => {
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="status" className="block text-sm font-medium text-gray-700">Application Status</label>
+          <label htmlFor="Education" className="block text-sm font-medium text-gray-700">Highest Education background</label>
           <select
-            id="status"
-            name="status"
-            value={formData.status}
+            id="Education"
+            name="Education"
+            value={formData.Education}
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
-            <option value="">Select Status</option>
-            <option value="Pending">Pending</option>
-            <option value="Accepted">Accepted</option>
-            <option value="Rejected">Rejected</option>
+            <option value="">Select Education background</option>
+            
+            <option value='highschool'>High Schools</option>
+            <option value='bachelor_degree'>Bachelor Degree</option>
+            <option value='master_degree'>Master Degree</option>
+            <option value='doctorate'>Doctorate</option>
+            
           </select>
-          {errors.status && <span className="text-sm text-red-600">{errors.status}</span>}
+          {errors.Education && <span className="text-sm text-red-600">{errors.Education}</span>}
         </div>
 
-        <div className="space-y-2">
-          <label htmlFor="appliedAt" className="block text-sm font-medium text-gray-700">Applied Date</label>
-          <input
-            type="date"
-            id="appliedAt"
-            name="appliedAt"
-            value={formData.appliedAt}
-            onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-          {errors.appliedAt && <span className="text-sm text-red-600">{errors.appliedAt}</span>}
-        </div>
+
 
         <button type="submit" className="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
           Submit Application
