@@ -1,72 +1,71 @@
-import React from 'react'
-import person1 from '../public/images/image4.webp'
-import person2 from '../public/images/image2.webp'
-import person3 from '../public/images/image3.webp'
+import React from 'react';
+import person1 from '../public/images/image4.webp';
+import person2 from '../public/images/image2.webp';
+import person3 from '../public/images/image3.webp';
+import { Link } from 'react-router-dom';
+import background from '../public/images/background.avif';
+
 function StartedPage() {
   return (
-    <div className='h-screen container'>
-    <div  className="flex justify-center mt-32 ">
-        <div className="relative w-16">
-        <img 
-          className="absolute left-0 w-12 h-14 rounded-full border-2 border-blue-700 z-20" 
-          src={person1} 
-          alt="image of person 1"
-        />
-        <img 
-          className="absolute left-10 w-12 h-14 rounded-full border-2 border-blue-700 z-10" 
-          src={person2} 
-          alt="image of person 2"
-        />
-        <img 
-          className="absolute left-20 w-12 h-14 rounded-full border-2 border-blue-700 z-0" 
-          src={person3} 
-          alt="image of person 3"
-        />
-         </div>
-         <div>
-          <p className='text-2xl ml-20 mt-3 text-blue-700 font-semibold'>50 k user</p>
-         </div>
-         
-    </div>
-    <div className='mt-10 text-center'>
-      <h1 className='text-4xl font-semibold'>Your Next Job Awaits</h1>
-      <h1  className='text-4xl font-semibold mt-10'>Find the perfect job or hire <span className='text-blue-700'>the best talent with ease.</span></h1>
-    </div>
+    <div className="relative h-screen w-full overflow-hidden bg-gray-50">
+      {/* Background Section */}
+      <div 
+        className="absolute inset-0 bg-cover bg-right opacity-40"
+        style={{ backgroundImage: `url(${background})` }}
+      ></div>
 
-    <div className="flex justify-center items-center p-8 mt-12 ">
- 
-      <div className="border-4 border-black p-10 rounded-lg shadow-xl space-y-8 bg-blue-950">
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-white to-transparent"></div>
+
+      {/* Content Section */}
+      <div className="relative container mx-auto px-6 py-12 h-full flex flex-col justify-between">
         
-        
-        <div className="flex flex-col items-center border-b-4 border-blue-700 pb-6">
-          <h1 className="text-4xl font-bold text-blue-700">50k+</h1>
-          <h2 className="text-xl text-gray-600">Satisfying</h2>
+
+        {/* Title Section */}
+        <div className="text-center mt-12">
+          <h1 className="text-5xl font-extrabold text-gray-900">
+            Your Next Job Awaits
+          </h1>
+          <p className="text-xl text-gray-600 mt-4">
+            Find the perfect job or hire <span className="text-blue-700">top talent</span> with ease.
+          </p>
         </div>
-        
- 
-        <div className="grid grid-cols-3 gap-8 ">
-       
-          <div className="flex flex-col items-center border-4 border-blue-700 p-6 rounded-lg shadow-lg bg-blue-50 transition-all hover:shadow-2xl animate-slide-in delay-200 hover:scale-105">
-            <h1 className="text-3xl font-bold text-blue-700">100k+</h1>
-            <p className="text-lg text-gray-600">Job postings</p>
+
+        {/* Search Bar */}
+        <div className="mt-10 flex justify-center">
+          <div className="flex items-center w-full max-w-xl bg-white rounded-lg shadow-md overflow-hidden">
+            <input
+              type="text"
+              placeholder="Search for jobs or talent..."
+              className="flex-grow p-4 text-gray-700 focus:outline-none"
+            />
+            <Link 
+              to="/signup"
+              className="px-6 py-4 bg-blue-600 text-white font-medium hover:bg-blue-700 transition"
+            >
+              Search
+            </Link>
           </div>
-          
-         
-          <div className="flex flex-col items-center border-4 border-blue-700 p-6 rounded-lg shadow-lg bg-blue-50 transition-all hover:shadow-2xl animate-slide-in delay-200 hover:scale-105">
-            <h1 className="text-3xl font-bold text-blue-700">10k+</h1>
-            <p className="text-lg text-gray-600">Recruiters</p>
+        </div>
+
+        {/* Stats Section */}
+        <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+          <div className="p-6 bg-white rounded-lg shadow-md border-t-4 border-blue-500">
+            <h2 className="text-3xl font-bold text-blue-600">100k+</h2>
+            <p className="text-gray-600 mt-2">Job Postings</p>
           </div>
-          
-      
-          <div className="flex flex-col items-center border-4 border-blue-700 p-6 rounded-lg shadow-lg bg-blue-50 transition-all hover:shadow-2xl animate-slide-in delay-200 hover:scale-105">
-            <h1 className="text-3xl font-bold text-blue-700">25k+</h1>
-            <p className="text-lg text-gray-600">Companies</p>
+          <div className="p-6 bg-white rounded-lg shadow-md border-t-4 border-blue-500">
+            <h2 className="text-3xl font-bold text-blue-600">10k+</h2>
+            <p className="text-gray-600 mt-2">Recruiters</p>
+          </div>
+          <div className="p-6 bg-white rounded-lg shadow-md border-t-4 border-blue-500">
+            <h2 className="text-3xl font-bold text-blue-600">25k+</h2>
+            <p className="text-gray-600 mt-2">Companies</p>
           </div>
         </div>
       </div>
     </div>
-    </div>
-  )
+  );
 }
 
-export default StartedPage
+export default StartedPage;
