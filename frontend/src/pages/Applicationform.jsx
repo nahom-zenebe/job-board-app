@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AppForm } from '../feature/applications'; 
 
 import { useNavigate } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 
 
@@ -13,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 const Applicationform = () => {
   const { isApplicationCreated,Application } = useSelector((state) => state.Application);
   const navigate = useNavigate();
+  const {jobId}=useParams()
   const [formData, setFormData] = useState({
     phone: '',
     location:'',
@@ -20,6 +22,8 @@ const Applicationform = () => {
     Education: '',
  
   });
+
+
   const {  authUser } = useSelector((state) => state.auth);
 
 
@@ -55,7 +59,16 @@ const Applicationform = () => {
     // If no errors, submit the form data (you can call an API here)
     if (Object.keys(newErrors).length === 0) {
       console.log('Form Submitted:', formData);
-      dispatch(AppForm(authUser._id,formData))
+     
+      const applicationData = {
+        jobId,  
+        data: { 
+          ...formData, 
+          seeker: authUser._id 
+        }
+      };
+      
+      dispatch(AppForm(applicationData))
       .unwrap()
       .then(() => {
         navigate('/');
@@ -134,9 +147,13 @@ const Applicationform = () => {
 
 
 
-        <button type="submit" className="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-          Submit Application
-        </button>
+        <button 
+  type="submit" 
+  className="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+  disabled={isApplicationCreated}
+>
+  {isApplicationCreated ? 'Submitting...' : 'Submit'}
+</button>
       </form>
     </div>
   );

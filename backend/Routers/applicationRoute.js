@@ -4,7 +4,7 @@ const { authmiddleware,recruitermiddleware} = require('../middleware/Authmiddlew
 const {applicationForm,getApplicationsByJob,getApplicationsBySeeker,getAllApplicationsForRecruiter, updateApplicationStatus,RemoveApplication}=require('../controller/ApplicationController')
 
 
-router.post('/applicationForm/:jobId',authmiddleware,applicationForm)
+router.post('/applicationForm/:jobId',applicationForm)
 router.get('/:jobId',authmiddleware, getApplicationsByJob);
 router.get('/seeker/:seekerId',authmiddleware,getApplicationsBySeeker);
 

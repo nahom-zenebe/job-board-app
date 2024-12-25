@@ -3,21 +3,25 @@ import React, { useState ,useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import JobSkeletion from '../skeletons/JobSkeletion'
 import { getalljob } from '../feature/jobSlicer';
-
+import { Link, } from 'react-router-dom';
 import { Pin } from 'lucide-react';
 import { pinJob } from '../feature/jobSlicer'; 
-import { Link, useParams } from 'react-router-dom';
+import FormattedTime from '../libs/FormattedTime'
+
 
 
 
 function SearchJobs() {
-  const {jobId}=useParams()
+
 const { alljobposting, isallJobget } = useSelector((state) => state.job);
 const [jobData, setJobData] = useState(alljobposting || []); 
 const[givenpin,setGivenPin]=useState(false)
 const dispatch = useDispatch();
 
-console.log(alljobposting )
+
+
+
+
 
 useEffect(() => {
   
@@ -26,12 +30,16 @@ useEffect(() => {
   }
 }, [dispatch, alljobposting]);
 
- 
 
 if( isallJobget){
   return <JobSkeletion/>
 
+
 }
+
+
+
+
 const handlePin = (jobId) => {
   dispatch(pinJob(jobId));
 };
@@ -56,18 +64,22 @@ const handlePin = (jobId) => {
             </div>
 
             <div className="flex justify-between mt-10 mb-5">
-              <Link to={`/MainDashboard/Applicationform/${alljobposting._id}`}
-               className="bg-blue-500 w-32 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+              <Link 
+                to={`/MainDashboard/Applicationform/${job._id}`}
+                className="bg-blue-500 w-32 text-white px-4 py-2 rounded-md hover:bg-blue-600"
               >
                 Apply
-                </Link>
-             
-              <button
-              
+              </Link>
+              <button 
                 className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400"
               >
                 View Details
               </button>
+            </div>
+
+            {/* Ensure time is positioned below the buttons, aligned consistently */}
+            <div className="mt-auto text-gray-500 text-sm ml-52">
+              <FormattedTime timestamp={job.postedAt} />
             </div>
           </div>
         ))}

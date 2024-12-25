@@ -6,17 +6,18 @@ const  Job=require('../models/JobPostingsmodel')
 module.exports.applicationForm=async(req,res)=>{
 
     try {
-        const {jobId,seeker,phone,location,coverLetter,Education}=req.body
-        if (!job || !seeker || !coverLetter ||! phone|| !Education ) {
+
+        const {jobid,seeker,phone,location,coverLetter,Education}=req.body
+        if (!jobid || !seeker || !coverLetter ||! phone|| !Education ) {
             return res.status(400).json({ message: "All fields are required" });
           }
-          const job=await Job.findById(jobId)
+          const job=await Job.findById(jobid)
           if (!job) {
             return res.status(404).json({ message: 'Job not found' });
           }
 
         const newApplicationForm=new Application({
-            job:jobId,seeker,location, phone,coverLetter,Education,appliedAt
+            job,seeker,location, phone,coverLetter,Education,appliedAt
         })
 
         const savedApplication = await newApplicationForm.save();
