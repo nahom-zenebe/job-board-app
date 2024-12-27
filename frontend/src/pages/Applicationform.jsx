@@ -15,6 +15,7 @@ const Applicationform = () => {
   const { isApplicationCreated,Application } = useSelector((state) => state.Application);
   const navigate = useNavigate();
   const {jobId}=useParams()
+  
   const [formData, setFormData] = useState({
     phone: '',
     location:'',
@@ -26,7 +27,7 @@ const Applicationform = () => {
 
   const {  authUser } = useSelector((state) => state.auth);
 
-
+console.log(authUser)
   const dispatch = useDispatch();
 
   const [errors, setErrors] = useState({});
@@ -40,6 +41,7 @@ const Applicationform = () => {
 
     });
   };
+
 
   // Handle form submission
   const handleSubmit = (e) => {
@@ -60,25 +62,31 @@ const Applicationform = () => {
     if (Object.keys(newErrors).length === 0) {
       console.log('Form Submitted:', formData);
      
-      const applicationData = {
-        jobId,  
-        data: { 
-          ...formData, 
-          seeker: authUser._id 
-        }
+     
+        const applicationData = {
+          seeker: authUser.user.id,
+          phone: formData.phone,
+          location: formData.location,
+          coverLetter: formData.coverLetter,
+          Education: formData.Education,
+        
       };
+   
       
-      dispatch(AppForm(applicationData))
+      dispatch(AppForm({ jobId, data: applicationData }))
       .unwrap()
       .then(() => {
         navigate('/');
       })
       .catch((error) => {
         console.error('Applications creation error:', error);
+        console.log(applicationData)
       });
+   
       
     }
   };
+ 
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">

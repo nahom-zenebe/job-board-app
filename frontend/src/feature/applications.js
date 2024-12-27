@@ -12,9 +12,9 @@ const initialState={
 }
 
 
-export const AppForm=createAsyncThunk('applications/applicationForm/:jobId',async({ JobId, data },{ rejectWithValue })=>{
-    const reponse=await axiosInstance.post(`applications/applicationForm/${JobId}`,data,{ rejectWithValue })
-     return reponse.data
+export const AppForm=createAsyncThunk('applications/applicationForm',async({ jobId, data },{ rejectWithValue })=>{
+    const response=await axiosInstance.post(`applications/applicationForm/${jobId}`,data,{ rejectWithValue })
+     return response.data
 })
   
 
@@ -35,7 +35,7 @@ const ApplicationSlice=createSlice({
         builder.addCase(AppForm.rejected, (state,action) => {
             state.isApplicationCreated = false;
             toast.error(action.payload || 'Error during application');
-            console.log("there wase eroor")
+          
           });
 }})
 

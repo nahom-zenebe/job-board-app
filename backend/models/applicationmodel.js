@@ -9,7 +9,7 @@ const applicationSchema=new mongoose.Schema({
   phone:{type:Number,required:true},
   location:{type:String,required:true},
   coverLetter: { type: String },
-  Eduction: { type: String, enum: ['highschool', 'bachelor_degree', 'master_degree','doctorate'], default: 'bachelor_degree' },
+  Education: { type: String, enum: ['highschool', 'bachelor_degree', 'master_degree','doctorate'], default: 'bachelor_degree' },
   appliedAt: { type: Date, default: Date.now },
   
   

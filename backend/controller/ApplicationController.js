@@ -3,36 +3,39 @@ const Application=require('../models/applicationmodel')
 const  Job=require('../models/JobPostingsmodel')
 
 
-module.exports.applicationForm=async(req,res)=>{
+module.exports.applicationForm = async (req, res) => {
+  try {
+    const { seeker, phone, location, coverLetter, Education } = req.body;
+    const { jobId } = req.params;
 
-    try {
-
-        const {jobid,seeker,phone,location,coverLetter,Education}=req.body
-        if (!jobid || !seeker || !coverLetter ||! phone|| !Education ) {
-            return res.status(400).json({ message: "All fields are required" });
-          }
-          const job=await Job.findById(jobid)
-          if (!job) {
-            return res.status(404).json({ message: 'Job not found' });
-          }
-
-        const newApplicationForm=new Application({
-            job,seeker,location, phone,coverLetter,Education,appliedAt
-        })
-
-        const savedApplication = await newApplicationForm.save();
-    
-        res.status(201).json({message:"Application created successfully",savedApplication});
-
-
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Error creating application form", error: error.message });
-     
+    if (!jobId || !seeker || !coverLetter || !phone || !Education) {
+      return res.status(400).json({ message: "All fields are required" });
     }
 
-}
+    const job = await Job.findById(jobId);
+    console.log('Received jobId:', jobId);
+    if (!job) {
+      return res.status(404).json({ message: "Job not found" });
+    }
+
+    const newApplicationForm = new Application({
+      job,
+      seeker,
+      location,
+      phone,
+      coverLetter,
+      Education,
+    });
+
+  
+
+    const savedApplication = await newApplicationForm.save();
+    res.status(201).json({ message: "Application created successfully", savedApplication });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error creating application form", error: error.message });
+  }
+};
 
 
 module.exports.getApplicationsByJob=async(req,res)=>{
