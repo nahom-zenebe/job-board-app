@@ -17,6 +17,7 @@ module.exports.applicationForm = async (req, res) => {
     if (!job) {
       return res.status(404).json({ message: "Job not found" });
     }
+    
 
     const newApplicationForm = new Application({
       job,
@@ -61,7 +62,7 @@ module.exports.getApplicationsByJob=async(req,res)=>{
 
 module.exports.getApplicationsBySeeker = async (req, res) => {
     try {
-      const seekerId = req.params.seekerId;
+      const { seekerId } = req.params;
   
       const applications = await Application.find({ seeker: seekerId })
         .populate('job')

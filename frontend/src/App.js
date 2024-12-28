@@ -39,7 +39,7 @@ function App() {
       <Route path="/MainDashboard" element={<MainDashboard/>}>
         <Route path="UpdateProfile" element={<UpdateProfile/>}/>
         <Route path="Searchjobs" element={<Searchjobs/>}/>
-        <Route path="MyApplication" element={<MyApplication/>}/>
+        <Route path="MyApplication/applications/seeker/:seekerId" element={<MyApplication/>}/>
         <Route path="SavedJob" element={<SavedJob/>}/>
         <Route path="/MainDashboard/Applicationform/:jobId" element={<Applicationform/>}/>
         <Route path="AccountSetting" element={<AccountSetting/>}/>

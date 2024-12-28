@@ -1,22 +1,38 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import avatar from '../images/avatar.png';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../feature/authSlice';
 import { useNavigate } from 'react-router-dom';
-
+import {getApplicationById} from '../feature/applications'
 
 
 function Sidebar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const {seekerId}=useParams
   const {  authUser } = useSelector((state) => state.auth);
+  
+  const { ApplicationById } = useSelector((state) => state.Application);
   console.log("authUser:", authUser);
+  const [ApplicationData, setApplication] = useState(ApplicationById || []); 
 
+
+  useEffect(() => {
+  
+    if (!ApplicationById) {
+      dispatch(getApplicationById({seekerId}));
+    }
+  }, [dispatch,ApplicationById]);
+  
+  console.log(authUser)
   
   if (!authUser) {
     return <div>Loading...</div>; // Or redirect to login
   }
+
+  
+  
 
   const handleLogout=()=>{
     dispatch (logout())
@@ -64,7 +80,7 @@ function Sidebar() {
    
           </li>
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
-          {authUser?.user?.role==="seeker"?<Link to='/MainDashboard/MyApplication'> My Applications</Link> :<Link to='/RecruiterDashboard/Applications'>Applications</Link> } 
+          {authUser?.user?.role==="seeker"?<Link to={`/MainDashboard/MyApplication/applications/seeker/${authUser.user.id}`}> My Applications</Link> :<Link to='/RecruiterDashboard/Applications/:seekerId'>Applications</Link> } 
           
           </li>
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">

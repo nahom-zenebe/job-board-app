@@ -43,13 +43,12 @@ console.log(authUser)
   };
 
 
-  // Handle form submission
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const newErrors = {};
 
-    // Check if all required fields are filled out
     if (!formData.phone) newErrors.phone = 'phone field is required';
     if (!formData.location) newErrors.location= 'location field is required';
     if (!formData.coverLetter) newErrors.coverLetter = 'Cover letter is required';
@@ -58,7 +57,7 @@ console.log(authUser)
 
     setErrors(newErrors);
 
-    // If no errors, submit the form data (you can call an API here)
+  
     if (Object.keys(newErrors).length === 0) {
       console.log('Form Submitted:', formData);
      
