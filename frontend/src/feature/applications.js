@@ -55,7 +55,7 @@ const ApplicationSlice=createSlice({
           )
           builder.addCase(getApplicationById.rejected,(state,action)=>{
             state.isApplicationgetById=false
-            toast.error(action.payload || 'Error during application');
+           
 
           }
           )

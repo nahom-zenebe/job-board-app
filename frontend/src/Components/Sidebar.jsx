@@ -10,26 +10,15 @@ import {getApplicationById} from '../feature/applications'
 function Sidebar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {seekerId}=useParams
+ 
   const {  authUser } = useSelector((state) => state.auth);
   
   const { ApplicationById } = useSelector((state) => state.Application);
-  console.log("authUser:", authUser);
-  const [ApplicationData, setApplication] = useState(ApplicationById || []); 
 
 
-  useEffect(() => {
+
+
   
-    if (!ApplicationById) {
-      dispatch(getApplicationById({seekerId}));
-    }
-  }, [dispatch,ApplicationById]);
-  
-  console.log(authUser)
-  
-  if (!authUser) {
-    return <div>Loading...</div>; // Or redirect to login
-  }
 
   
   

@@ -18,6 +18,7 @@ import UpdateRecruiterProfile from './pages/UpdateRecruiterProfile';
 import RecruiterDashboard from './pages/RecruiterDashboard';
 import AccountSetting from './pages/AccountSetting';
 import Searchjobs from './pages/Searchjobs';
+import PagenotFound from './pages/PagenotFound.jsx'
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -35,6 +36,7 @@ function App() {
         <Route path="/service" element={<Service />} />
         <Route path="/signup" element={<SignupPages/>}/>
         <Route path="login" element={<LoginPages/>}/>
+        <Route path='*' element={<PagenotFound/>}/>
         
       <Route path="/MainDashboard" element={<MainDashboard/>}>
         <Route path="UpdateProfile" element={<UpdateProfile/>}/>
@@ -49,6 +51,7 @@ function App() {
   <Route path="Postingjob" element={<Postingjob />} />
   <Route path="Applications" element={<Applications />} />
   <Route path="RecruiterAccountSetting" element={<RecruiterAccountSetting />} />
+  
    </Route>
       </Routes>
        

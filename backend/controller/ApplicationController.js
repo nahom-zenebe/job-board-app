@@ -1,4 +1,4 @@
-
+const mongoose = require('mongoose');
 const Application=require('../models/applicationmodel')
 const  Job=require('../models/JobPostingsmodel')
 
@@ -42,7 +42,7 @@ module.exports.applicationForm = async (req, res) => {
 module.exports.getApplicationsByJob=async(req,res)=>{
 
     try {
-        const jobId = req.params.jobId;
+        const {jobId} = req.params;
     
         const applications = await Application.find({ job: jobId })
           .populate('job')
@@ -63,10 +63,15 @@ module.exports.getApplicationsByJob=async(req,res)=>{
 module.exports.getApplicationsBySeeker = async (req, res) => {
     try {
       const { seekerId } = req.params;
+
+      if (!seekerId || !mongoose.Types.ObjectId.isValid(seekerId)) {
+        return res.status(400).json({ message: 'Invalid seekerId' });
+      }
   
-      const applications = await Application.find({ seeker: seekerId })
+      const applications = await Application.find({seeker:seekerId })
         .populate('job')
-        .populate('seeker');
+        .populate('seeker')
+
   
       if (applications.length === 0) {
         return res.status(404).json({ message: 'No applications found for this seeker' });
