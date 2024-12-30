@@ -97,7 +97,7 @@ const pindata=async(req,res)=>{
         }
     
         job.pinned=!job.pinned
-        await Job.save()
+        await job.save()
 
         res.json({ 
             message: Job.pinned ? 'Job pinned successfully' : 'Job unpinned successfully', 
@@ -106,7 +106,7 @@ const pindata=async(req,res)=>{
           });
         
     } catch (error) {
-        res.status(500).json({ message: 'Error pinning/unpinning job', error: err.message });
+        res.status(500).json({ message: 'Error pinning/unpinning job', error: error.message });
         
     }
 

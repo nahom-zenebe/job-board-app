@@ -6,7 +6,7 @@ const {createjobposting, getallpostedjob,getEarlypostedjob,UpdateJobPosting,pind
 router.post('/postsjob',createjobposting)
 router.get('/alljobposting',getallpostedjob)
 router.get('/recentjob',authmiddleware,getEarlypostedjob)
-router.post('/pindata/:jobId',authmiddleware,pindata)
+router.put('/pindata/:jobId',pindata)
 router.put('/updatejob/:Id',authmiddleware,recruitermiddleware,UpdateJobPosting)
 
 

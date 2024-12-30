@@ -13,8 +13,9 @@ import FormattedTime from '../libs/FormattedTime'
 
 function SearchJobs() {
 
-const { alljobposting, isallJobget } = useSelector((state) => state.job);
-const [jobData, setJobData] = useState(alljobposting || []); 
+const { alljobposting, isallJobget,isPinJob } = useSelector((state) => state.job);
+const [jobData, setJobData] = useState(alljobposting || null); 
+
 const[givenpin,setGivenPin]=useState(false)
 const dispatch = useDispatch();
 
@@ -31,7 +32,7 @@ useEffect(() => {
 }, [dispatch, alljobposting]);
 
 
-if( isallJobget){
+if(!jobData){
   return <JobSkeletion/>
 
 
@@ -42,6 +43,7 @@ if( isallJobget){
 
 const handlePin = (jobId) => {
   dispatch(pinJob(jobId));
+
 };
 
   return (
@@ -51,7 +53,7 @@ const handlePin = (jobId) => {
       <div className="grid grid-cols-1 mt-40 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {jobData.map((job, index) => (
           <div key={index} className="bg-white border rounded-lg shadow-lg p-4">
-            <div className='flex justify-between'><h3 className="text-xl font-semibold text-gray-800">{job.title}</h3><Pin onClick={() => handlePin(alljobposting._id)}/></div>
+            <div className='flex justify-between'><h3 className="text-xl font-semibold text-gray-800">{job.title}</h3><Pin className={`${isPinJob === true ? 'text-green-700' : 'text-gray-800'}`} onClick={() => handlePin(job?._id)} /></div>
             <p className="text-gray-600">{job.company}</p>
             <p className="text-gray-500 mt-2">{job.description}</p>
             <div className="mt-4">

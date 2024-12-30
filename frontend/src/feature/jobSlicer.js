@@ -16,9 +16,9 @@ const initialState={
 }
 
 export const pinJob=createAsyncThunk(
-  `/pindata/:jobId`,async(jobId,{rejectWithValue})=>{
+  `job/pindata/:jobId`,async(jobId,{rejectWithValue})=>{
     try {
-      const response = await axiosInstance.post(`/pindata/${jobId}`, {}, { withCredentials: true });
+      const response = await axiosInstance.put(`job/pindata/${jobId}`, {}, { withCredentials: true });
       return response.data
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Error pinning job');
