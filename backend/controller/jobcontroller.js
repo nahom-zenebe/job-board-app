@@ -48,7 +48,7 @@ try {
 
 const getEarlypostedjob=async(req,res)=>{
     try {
-      //make it -1 becaue we want to make it for the last 24hr
+      
         const oneDayAgo=new Date()
         oneDayAgo.setDate(oneDayAgo.getDate()-1)
      const newJobposting=await Job.find({  
@@ -111,4 +111,22 @@ const pindata=async(req,res)=>{
     }
 
 }
-    module.exports={createjobposting,pindata,getallpostedjob,getEarlypostedjob,UpdateJobPosting}
+const getpindata=async(req,res)=>{
+    try {
+        
+        const pinnedData=await Job.find({pinned:true})
+       
+        if (!pinnedData || pinnedData.length === 0) {
+            return res.status(404).json({ message: 'No pinned jobs found' });
+        }
+        return res.json({ message: 'Pinned jobs retrieved successfully',  pinnedData });
+
+
+    } catch (error) {
+        console.error('Error fetching pinned jobs:', error);
+        return res.status(500).json({ message: 'Error fetching pinned jobs', error: error.message });
+   
+        
+    }
+}
+    module.exports={createjobposting,pindata,getallpostedjob,getEarlypostedjob,UpdateJobPosting,getpindata}
