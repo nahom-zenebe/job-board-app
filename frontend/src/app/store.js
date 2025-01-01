@@ -22,7 +22,13 @@ export const store=configureStore({
         recruiter:recruiterReducer,
         auth: persistedReducer,
        
-    }
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+          serializableCheck: {
+            ignoredActions: ['REGISTER'], 
+          },
+        }),
 })
 export const persistor = persistStore(store);
 export default store;

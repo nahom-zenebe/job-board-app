@@ -119,7 +119,7 @@ const getpindata=async(req,res)=>{
         if (!pinnedData || pinnedData.length === 0) {
             return res.status(404).json({ message: 'No pinned jobs found' });
         }
-        return res.json({ message: 'Pinned jobs retrieved successfully',  pinnedData });
+        return res.json({ pinnedData });
 
 
     } catch (error) {
