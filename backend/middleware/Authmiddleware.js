@@ -3,29 +3,41 @@ const jwt=require('jsonwebtoken')
 const User=require('../models/usermodel')
 require('dotenv').config();
 
-module.exports.authmiddleware=async(req,res,next)=>{
-    const token=req.cookies.Jobpostingapp
+module.exports.authmiddleware = async (req, res, next) => {
     try {
 
-        if(!token){
-            return res.status(401).json({ message: "Unauthorized: No token provided." });    
-        }
-      
-            const decodedToken=await jwt.verify(token,process.env.SecretKey)
 
-            const user = await User.findById(decodedToken.userId).select("-password");
-            if (!user) {
-                return res.status(401).json({ message: "User not found" });
-            }
-            req.user =user;
-            next()
-        
-    } catch (error) {
-        console.error("Token verification error:", error.message);
+
+      const token = req.cookies.Jobpostingapp;
+    
+     
+  
+      if (!token) {
+        return res.status(401).json({ message: "Unauthorized: No token provided." });
+      }
+  
+
+      const decodedToken = jwt.verify(token, process.env.SecretKey);
+ 
+      if (!decodedToken || !decodedToken.userId) {
         return res.status(401).json({ message: "Unauthorized: Invalid token." });
-    }
+      }
+  
+      
+      const user = await User.findById(decodedToken.userId).select("-password");
+      if (!user) {
+        return res.status(401).json({ message: "Unauthorized: User not found." });
+      }
+  
 
-}
+      req.user = user;
+      
+      next();
+    } catch (error) {
+      console.error("Token verification error:", error.message);
+      return res.status(401).json({ message: "Unauthorized: Invalid or expired token." });
+    }
+  };
 
 
 module.exports.recruitermiddleware=async(req,res,next)=>{
@@ -40,7 +52,7 @@ module.exports.recruitermiddleware=async(req,res,next)=>{
         }
         next()
     } catch (error) {
-        
+        return res.status(401).json({ message: "Unauthorized: Invalid or expired token." });
     }
     
 }

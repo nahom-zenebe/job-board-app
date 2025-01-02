@@ -9,7 +9,7 @@ import recruiterReducer from '../feature/recruiterSlice'
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['auth'], // only persist the auth slice
+    whitelist: ['auth'], 
   };
   const persistedReducer = persistReducer(persistConfig, authReducer)
 

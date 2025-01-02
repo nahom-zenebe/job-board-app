@@ -39,26 +39,38 @@ module.exports.applicationForm = async (req, res) => {
 };
 
 
-module.exports.getApplicationsByJob=async(req,res)=>{
+module.exports.getApplicationsByJob = async (req, res) => {
+  try {
+    const { jobId } = req.params;
 
-    try {
-        const {jobId} = req.params;
-    
-        const applications = await Application.find({ job: jobId })
-          .populate('job')
-          .populate('seeker');
-    
-        if (applications.length === 0) {
-          return res.status(404).json({ message: 'No applications found for this job' });
-        }
-    
-        res.status(200).json(applications);
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error fetching applications for this job', error: error.message });
+    let query = {};
+
+
+    if (jobId !== "allapplications") {
+     
+      if (!mongoose.Types.ObjectId.isValid(jobId)) {
+        return res.status(400).json({ message: 'Invalid job ID' });
       }
+      query.job = jobId;
+    }
 
-}
+    
+    const applications = await Application.find(query)
+      .populate('job')
+      .populate('seeker');
+
+    if (applications.length === 0) {
+      return res.status(404).json({ message: 'No applications found for this job' });
+    }
+
+    res.status(200).json(applications);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching applications for this job', error: error.message });
+  }
+};
+
+
 
 module.exports.getApplicationsBySeeker = async (req, res) => {
     try {
@@ -86,6 +98,7 @@ module.exports.getApplicationsBySeeker = async (req, res) => {
 
   module.exports.getAllApplicationsForRecruiter = async (req, res) => {
     try {
+
         
         const jobs = await Job.find({ postedBy: req.user._id });
         const applications = await Application.find({ job: { $in: jobs.map(job => job._id) } })

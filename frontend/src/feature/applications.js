@@ -10,7 +10,9 @@ const initialState={
     isApplicationCreated:false,
     Application:null,
     isApplicationgetById:false,
-    ApplicationById:null
+    ApplicationById:null,
+    AllApplicationsForRecruiter:null,
+    isgetAllApplicationsForRecruiter:false
 }
 
 
@@ -21,6 +23,10 @@ export const AppForm=createAsyncThunk('applications/applicationForm',async({ job
 export const getApplicationById=createAsyncThunk('applications/seeker',async({seekerId},{rejectWithValue })=>{
    const response=await axiosInstance.get(`applications/seeker/${seekerId}`,{rejectWithValue})
    return response.data
+})
+export const getAllApplicationsForRecruiter=createAsyncThunk('applications/allapplications',async(_,{rejectWithValue })=>{
+    const response=await axiosInstance.get('applications/allapplications',{ withCredentials: true },{rejectWithValue })
+    return response.data
 })
 
 
@@ -57,8 +63,18 @@ const ApplicationSlice=createSlice({
             state.isApplicationgetById=false
            
 
-          }
-          )
+          })
+          builder.addCase(getAllApplicationsForRecruiter.pending,(state)=>{
+              state.isgetAllApplicationsForRecruiter=true
+          })
+          builder.addCase(getAllApplicationsForRecruiter.fulfilled,(state,action)=>{
+            state.isgetAllApplicationsForRecruiter=false
+            state.AllApplicationsForRecruiter=action.payload
+        })
+        builder.addCase(getAllApplicationsForRecruiter.rejected,(state,action)=>{
+          state.isgetAllApplicationsForRecruiter=false
+          toast.error(action.payload || 'Error during fetch application');
+      })
 }})
 
 export default ApplicationSlice.reducer;

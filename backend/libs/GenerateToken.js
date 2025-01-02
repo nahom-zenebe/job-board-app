@@ -1,7 +1,7 @@
 const jwt=require('jsonwebtoken')
 require('dotenv').config()
 
-const secretKey=process.env.SecretKey
+
 
 
 
@@ -10,10 +10,10 @@ module.exports.GeneratorToken=async(user,res)=>{
 
     try {
 
-        if(!secretKey){
+        if(!process.env.SecretKey){
             throw new Error("Secret key is not defined in the environment variables.");
         }
-        const token=jwt.sign({id:user.id,role:user.role},secretKey)
+        const token=jwt.sign({userId:user._id,role:user.role},process.env.SecretKey)
     res.cookie("Jobpostingapp", token, {
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true, 
