@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 
 const initialState={
     recruiterProfile: null,  
-    loading: false,          
+    isrecruiterProfile: false,          
     error: null, 
 }
 
@@ -67,15 +67,15 @@ const recruiterSlice=createSlice({
     reducers:{},
      extraReducers:(builder)=>{
         builder.addCase(createRecruiterProfile.pending,(state)=>{
-            state.loading = true;
+            state.isrecruiterProfile = true;
         })
         builder.addCase(createRecruiterProfile.fulfilled,(state,action)=>{
-            state.loading = false;
+            state.isrecruiterProfile = false;
             state.recruiterProfile = action.payload.savedProfile;
             toast.success('Account Created Successfully');
         })
         builder.addCase(createRecruiterProfile.rejected,(state,action)=>{
-            state.loading = false;
+            state.isrecruiterProfile = false;
             toast.error(action.payload || 'Error during creating Account');
 
         })

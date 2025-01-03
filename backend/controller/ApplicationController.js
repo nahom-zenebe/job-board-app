@@ -13,7 +13,7 @@ module.exports.applicationForm = async (req, res) => {
     }
 
     const job = await Job.findById(jobId);
-    console.log('Received jobId:', jobId);
+
     if (!job) {
       return res.status(404).json({ message: "Job not found" });
     }

@@ -21,8 +21,9 @@ module.exports.GeneratorToken=async(user,res)=>{
         secure: process.env.NODE_ENV !== "development",
       
     });
-   
+
     return token;
+
         
     } catch (error) {
         console.error("Error generating token:", error.message);

@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import avatar from '../images/avatar.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateProfile} from '../feature/authSlice'
+import { createRecruiterProfile} from '../feature/recruiterSlice'
 import {Camera } from 'lucide-react'
 import toast from 'react-hot-toast';
 
 
 function UpdateProfile() {
-  const { isUpdatingProfile} = useSelector((state) => state.auth);
+  const { isrecruiterProfile} = useSelector((state) => state.recruiter);
   const[selectedImage,setselectedImage]=useState(null)
   const dispatch = useDispatch();
 
@@ -27,7 +27,7 @@ function UpdateProfile() {
 
       setselectedImage(base64Image)
       try {
-        await dispatch(updateProfile(base64Image));
+        await dispatch(createRecruiterProfile(base64Image));
     } catch (error) {
         console.error('Error uploading image:', error);
         alert('Failed to upload image. Please try again.');
@@ -62,7 +62,7 @@ function UpdateProfile() {
                 bg-base-content hover:scale-105
                 p-2 rounded-full cursor-pointer 
                 transition-all duration-200
-                ${isUpdatingProfile ? "animate-pulse pointer-events-none" : ""}
+                ${isrecruiterProfile ? "animate-pulse pointer-events-none" : ""}
               `}
             >
               <Camera className="w-5 h-5 text-base-200" />
@@ -72,12 +72,12 @@ function UpdateProfile() {
                 className="hidden"
                 accept="image/*"
                 onChange={handleImageUpload}
-                disabled={isUpdatingProfile}
+                disabled={isrecruiterProfile}
               />
             </label>
           </div>
           <p className="text-sm text-zinc-400">
-            {isUpdatingProfile ? "Uploading..." : "Click the camera icon to update your photo"}
+            {isrecruiterProfile ? "Uploading..." : "Click the camera icon to update your photo"}
           </p>
         </div>
         </div>

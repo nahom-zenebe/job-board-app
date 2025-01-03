@@ -82,7 +82,7 @@ module.exports.login=async(req,res)=>{
         }
      
 
-    GeneratorToken(exisitinguser._id,res)
+        GeneratorToken(exisitinguser._id,res)
 
 res.status(201).json({
         message:"User Loggin successfully",
@@ -91,9 +91,10 @@ res.status(201).json({
             id:exisitinguser._id,
             name:exisitinguser.name,
             email:exisitinguser.email,
-            role:exisitinguser.role
+            role:exisitinguser.role,
 
-        }
+        },
+   
       })
     
     
@@ -132,7 +133,7 @@ module.exports.UpdateProfile = async (req, res) => {
 
     
     
-    console.log("User ID:", userId);
+   
 
     if (!userId) {
       return res.status(400).json({ message: "User not authenticated" });
