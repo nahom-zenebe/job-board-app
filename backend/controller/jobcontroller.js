@@ -45,6 +45,26 @@ try {
 }
 }
 
+const getjobbasedonfilter=async(req,res)=>{
+    try {
+        const {jobtitle,experienceLevel}=req.query;
+        const query={}
+        if(jobtitle) query.title={$regex: jobtitle,$options: 'i'}
+        if (experienceLevel)query.experienceLevel=experienceLevel
+
+        const filterjob=await Job.find(query)
+      
+        res.status(200).json({ success: true, jobs });
+       
+        
+    } catch (error) {
+    
+         console.log("Error get job Controller",error.message)
+        res.status(500).json({message:"Internal Server Error"})
+    }
+    }
+    
+
 
 const getEarlypostedjob=async(req,res)=>{
     try {
