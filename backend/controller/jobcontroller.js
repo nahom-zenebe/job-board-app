@@ -54,7 +54,7 @@ const getjobbasedonfilter=async(req,res)=>{
 
         const filterjob=await Job.find(query)
       
-        res.status(200).json({ success: true, jobs });
+        res.status(200).json({ success: true, filterjob });
        
         
     } catch (error) {
@@ -149,4 +149,4 @@ const getpindata=async(req,res)=>{
         
     }
 }
-    module.exports={createjobposting,pindata,getallpostedjob,getEarlypostedjob,UpdateJobPosting,getpindata}
+    module.exports={createjobposting,pindata,getallpostedjob,getEarlypostedjob,UpdateJobPosting,getpindata,getjobbasedonfilter}

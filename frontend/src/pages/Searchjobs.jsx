@@ -1,41 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import JobSkeletion from '../skeletons/JobSkeletion';
-import { getalljob } from '../feature/jobSlicer';
+import {  filterjob } from '../feature/jobSlicer';
 import { Link } from 'react-router-dom';
 import { Pin } from 'lucide-react';
 import { pinJob } from '../feature/jobSlicer'; 
+import { getalljob } from '../feature/jobSlicer'; 
+
 import FormattedTime from '../libs/FormattedTime';
 
+
 function SearchJobs() {
-  const { alljobposting, isPinJob } = useSelector((state) => state.job);
-  const [jobData, setJobData] = useState(alljobposting || [
-    { _id: '1', title: 'Frontend Developer', category: 'frontend', company: 'TechCorp', description: 'Build user interfaces.', location: 'San Francisco', experienceLevel: 'mid', salary: '80000', postedAt: Date.now() },
-    { _id: '2', title: 'Backend Developer', category: 'backend', company: 'DataFlow', description: 'Work on server-side logic.', location: 'New York', experienceLevel: 'senior', salary: '120000', postedAt: Date.now() },
-    // ... Add 18 more dummy jobs here
-  ]);
-  const [filteredJobs, setFilteredJobs] = useState(alljobposting || []);
-  const [selectedCategory, setSelectedCategory] = useState('');
+
+  const { filterjobs, isPinJob, alljobposting} = useSelector((state) => state.job);
+
+
+  const[filterresult,setfilterresult]=useState(filterjobs||[])
+
+
+
+  const[jobtitle,setjobtitle]=useState('')
   const [selectedExperience, setSelectedExperience] = useState('');
   const [locationSearch, setLocationSearch] = useState('');
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (!alljobposting) {
-      dispatch(getalljob());
+
+
+  useEffect(()=>{
+    if(!alljobposting){
+      dispatch(getalljob())
     }
-  }, [dispatch, alljobposting]);
+  },[dispatch,alljobposting])
 
   useEffect(() => {
-    let filtered = jobData;
-
-    if (selectedCategory) {
-      filtered = filtered.filter((job) => job.category === selectedCategory);
+    if (!filterjobs) {
+      dispatch( filterjob({jobtitle,selectedExperience}));
     }
+  }, [dispatch,  filterjob]);
 
-    if (selectedExperience) {
-      filtered = filtered.filter((job) => job.experienceLevel === selectedExperience);
-    }
+  useEffect(() => {
+    let filtered = filterresult;
 
     if (locationSearch) {
       filtered = filtered.filter((job) =>
@@ -43,10 +47,10 @@ function SearchJobs() {
       );
     }
 
-    setFilteredJobs(filtered);
-  }, [selectedCategory, selectedExperience, locationSearch, jobData]);
+    setfilterresult(filtered);
+  }, [ selectedExperience, locationSearch, jobtitle]);
 
-  if (!filteredJobs) {
+  if (!filterresult) {
     return <JobSkeletion />;
   }
 
@@ -66,8 +70,8 @@ function SearchJobs() {
           <select
             id="category"
             className="w-full px-4 py-2 border rounded-lg"
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
+            value={jobtitle}
+            onChange={(e) => setjobtitle(e.target.value)}
           >
             <option value="">All Categories</option>
             <option value="frontend">Frontend Developer</option>
@@ -113,8 +117,8 @@ function SearchJobs() {
 
       {/* Job Listings */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredJobs.length > 0 ? (
-          filteredJobs.map((job, index) => (
+        {alljobposting.length > 0 ? (
+          alljobposting.map((job, index) => (
             <div key={index} className="bg-white border rounded-lg shadow-lg overflow-hidden">
               <div className="flex justify-between p-4">
                 <h3 className="text-2xl font-semibold text-gray-800">{job.title}</h3>

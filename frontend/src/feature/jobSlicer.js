@@ -12,7 +12,8 @@ const initialState={
     isallJobget:false,
     isPinJob:false,
     getpindata:[],
-    isgetpindata:false
+    isgetpindata:false,
+    filterjobs:null
 
 
 }
@@ -55,6 +56,18 @@ export const getpinnedData=createAsyncThunk('job/pinnedData',async(_,{rejectWith
   try {
     const response=await axiosInstance.get('job/pinnedData',{ withCredentials: true })
     return response.data;
+  } catch (error) {
+    console.error("Error fetching jobs:", error); 
+    return rejectWithValue(error.response?.data?.message || 'Failed to fetch jobs'); 
+    
+  }
+})
+
+export const filterjob=createAsyncThunk('/job/filterjob',async({jobtitle, experienceLevel},{rejectWithValue })=>{
+  try {
+    const response=await axiosInstance.get('/job/filterjob',{ params:{ jobtitle, experienceLevel } })
+    return response.data.filterjob
+    
   } catch (error) {
     console.error("Error fetching jobs:", error); 
     return rejectWithValue(error.response?.data?.message || 'Failed to fetch jobs'); 
@@ -125,6 +138,21 @@ const jobSlice=createSlice({
   
         builder.addCase(getpinnedData.rejected, (state, action) => {
           state.isgetpindata = false; 
+          toast.error(action.payload || 'Error during get pinned data'); 
+        });
+
+        builder.addCase(filterjob.pending, (state) => {
+          state.isJobcreate= true; 
+        });
+    
+        builder.addCase(filterjob.fulfilled, (state, action) => {
+          state.isJobcreate = false; 
+          state.filterjobs = action.payload; 
+        });
+    
+  
+        builder.addCase(filterjob.rejected, (state, action) => {
+          state.isJobcreate = false; 
           toast.error(action.payload || 'Error during get pinned data'); 
         });
 
