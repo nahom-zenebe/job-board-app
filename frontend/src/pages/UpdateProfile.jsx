@@ -8,11 +8,12 @@ import toast from 'react-hot-toast';
 
 function UpdateProfile() {
   const { isrecruiterProfile} = useSelector((state) => state.recruiter);
+  const {  authUser } = useSelector((state) => state.auth);
   const[selectedImage,setselectedImage]=useState(null)
   const dispatch = useDispatch();
 
 
-
+console.log(authUser)
 
   const handleImageUpload=async(e)=>{
     e.preventDefault()
@@ -81,6 +82,23 @@ function UpdateProfile() {
           </p>
         </div>
         </div>
+        <div className="mt-5">
+  <h1
+    className="text-xl ml-16 mt-4 pl-4 bg-gray-400 text-gray-100 rounded-lg h-10 flex items-center"
+  >
+    Name: {authUser.user.name}
+  </h1>
+  <h1
+    className="text-xl ml-16 mt-4 pl-4 bg-gray-400 text-gray-100 rounded-lg h-10 flex items-center"
+  >
+    Email: {authUser.user.email}
+  </h1>
+  <h1
+    className="text-xl ml-16 mt-4 pl-4 bg-gray-400 text-gray-100 rounded-lg h-10 flex items-center"
+  >
+    Role: {authUser.user.role}
+  </h1>
+</div>
         </div>
         </div>
 
