@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
-import { Loader } from 'lucide-react'; 
+import { Loader,Eye,EyeOff} from 'lucide-react'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../feature/authSlice';
 import toast from 'react-hot-toast';
@@ -12,6 +12,8 @@ function LoginPages() {
   const[email,setemail]=useState()
   const[password,setpassword]=useState()
   const {   isLogging } = useSelector((state) => state.auth);
+  const[showpassword,setshowpassword]=useState(false)
+
 
 const handlelogin=(e)=>{
   e.preventDefault()
@@ -28,12 +30,18 @@ const handlelogin=(e)=>{
 
 }
 
+const showpasswordonclick=()=>{
+  setshowpassword(!showpassword)
+}
+
+
+
   return (
     <div className="min-h-screen bg-gery-200 text-gray-200 mt-32">
       
     <div className="container mx-auto py-16 px-4">
       <div className=" shadow-2xl rounded-lg p-8 max-w-lg mx-auto">
-        <h2 className="text-2xl font-bold text-blue-500 mb-6 text-center">Signup</h2>
+        <h2 className="text-2xl font-bold text-blue-500 mb-6 text-center">Login</h2>
         <form onSubmit={handlelogin} className="space-y-4">
           <div>
            
@@ -51,10 +59,11 @@ const handlelogin=(e)=>{
             <input
              value={password}
              onChange={(e)=>setpassword(e.target.value)}
-              type="password"
+              type={showpassword?"text":"password"}
               placeholder="Enter your password"
               className="w-full mt-1 p-2 text-black  border border-gray-600 rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+            <div onClick={showpasswordonclick} className='absolute top-96 pt-20 left-2/4 mt-10  pl-44'>{showpassword?<Eye className='text-black' />:<EyeOff className='text-black'/>}</div>
           </div>
         
           <button
@@ -68,7 +77,7 @@ const handlelogin=(e)=>{
       Logging up...
     </>
   ) : (
-    'Signup'
+    'Login'
   )}
 </button>
           <p  className=' text-center mt-5 text-gray-700'>New to JobBorad?<Link className='underline text-blue-700 hover:no-underline' to='/signup'>Create an Account</Link></p>

@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { Upload } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Loader } from 'lucide-react'; 
+import { Loader,Eye,EyeOff} from 'lucide-react'; 
 import { signup } from '../feature/authSlice';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ function SignupPages() {
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   const [role, setrole] = useState('seeker');
- 
+  const[showpassword,setshowpassword]=useState(false)
   const [dragActive, setDragActive] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
 
@@ -47,6 +47,10 @@ const handlesignup=(e)=>{
   
 
 }
+
+const showpasswordonclick = () => {
+  setshowpassword(!showpassword);
+};
 
 
   const handleDrag = (e) => {
@@ -114,12 +118,12 @@ const handlesignup=(e)=>{
             <div>
               <label className="block text-lg font-medium text-black">Password:</label>
               <input
-                type="password"
+                type={showpassword?"text":"password"}
                 value={password}
                 placeholder="Enter your password"
                 onChange={(e)=>setpassword(e.target.value)}
                 className="w-full text-black mt-1 p-2  border border-gray-600 rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+              /><div onClick={showpasswordonclick} className='absolute top-2/3 left-2/4  pl-44 pt-1 '>{showpassword?<Eye className='text-black' />:<EyeOff className='text-black'/>}</div>
             </div>
             <div>
             <label className="block text-lg font-medium text-black">Role:</label>
