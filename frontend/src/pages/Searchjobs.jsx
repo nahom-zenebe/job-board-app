@@ -15,7 +15,7 @@ function SearchJobs() {
   const [locationSearch, setLocationSearch] = useState('');
 
   const dispatch = useDispatch();
-console.log( alljobposting)
+
 
   useEffect(() => {
     if (!alljobposting) {

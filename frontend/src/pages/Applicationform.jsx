@@ -13,7 +13,10 @@ import { Link, useParams } from 'react-router-dom';
 
 const Applicationform = () => {
   const { isApplicationCreated,Application } = useSelector((state) => state.Application);
+  const[selectedjob,setselectedjob]=useState([])
   const navigate = useNavigate();
+  const {alljobposting } = useSelector((state) => state.job);
+  const {  authUser } = useSelector((state) => state.auth);
   const {jobId}=useParams()
   
   const [formData, setFormData] = useState({
@@ -23,11 +26,15 @@ const Applicationform = () => {
     Education: '',
  
   });
+  
+  const filterjob=alljobposting.filter((job)=>job._id==jobId)
+  console.log(filterjob)
 
 
-  const {  authUser } = useSelector((state) => state.auth);
 
-console.log(authUser)
+ 
+
+
   const dispatch = useDispatch();
 
   const [errors, setErrors] = useState({});
@@ -57,7 +64,8 @@ console.log(authUser)
 
     setErrors(newErrors);
 
-  
+
+    
     if (Object.keys(newErrors).length === 0) {
       console.log('Form Submitted:', formData);
      
@@ -73,7 +81,7 @@ console.log(authUser)
    
       
       dispatch(AppForm({ jobId, data: applicationData }))
-      .unwrap()
+      .unwrap
       .then(() => {
         navigate('/');
       })
@@ -88,7 +96,35 @@ console.log(authUser)
  
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div >
+      <div>
+  
+      <div className="mt-5">
+    
+  {filterjob.map((job, index) => (
+    <div
+      key={index}
+      className="bg-white border w-2/3 ml-40 border-gray-300 rounded-lg p-4 mb-4 shadow-md"
+    >
+      <h1 className="text-2xl font-semibold text-gray-800">{job.title}</h1>
+      <h2 className="text-lg text-gray-600">Company: {job.company}</h2>
+      <p className="text-gray-700 mt-2">{job.description}</p>
+      <p className="text-gray-600 mt-2">
+        <span className="font-medium">Location:</span> {job.location}
+      </p>
+      <p className="text-gray-600 mt-2">
+        <span className="font-medium">Experience Level:</span> {job.experienceLevel}
+      </p>
+      <p className="text-gray-600 mt-2">
+        <span className="font-medium">Salary:</span> {job.salary}
+      </p>
+    </div>
+  ))}
+</div>
+
+
+      </div>
+    <div className="max-w-2xl mx-auto  mt-10 p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-semibold text-center mb-6">Job Application Form</h2>
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div className="space-y-2">
@@ -162,6 +198,7 @@ console.log(authUser)
   {isApplicationCreated ? 'Submitting...' : 'Submit'}
 </button>
       </form>
+    </div>
     </div>
   );
 };

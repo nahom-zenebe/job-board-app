@@ -14,7 +14,6 @@ function LoginPages() {
   const {   isLogging } = useSelector((state) => state.auth);
   const[showpassword,setshowpassword]=useState(false)
 
-
 const handlelogin=(e)=>{
   e.preventDefault()
   dispatch(login({email,password}))

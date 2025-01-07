@@ -7,7 +7,7 @@ import FormattedTime from '../libs/FormattedTime';
 
 function SavedJob() {
   const { getpindata, isgetpindata } = useSelector((state) => state.job);
-  const [pinnedData, setPinnedData] = useState(getpindata?.pinnedData || []); // Set initial state
+  const [pinnedData, setPinnedData] = useState(getpindata?.pinnedData || []); 
 
   const dispatch = useDispatch();
 
