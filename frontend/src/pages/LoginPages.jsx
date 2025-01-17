@@ -13,6 +13,11 @@ function LoginPages() {
   const[password,setpassword]=useState()
   const {   isLogging } = useSelector((state) => state.auth);
   const[showpassword,setshowpassword]=useState(false)
+  const[typepassword,istypepassword]=useState(false)
+
+
+
+
 
 const handlelogin=(e)=>{
   e.preventDefault()
@@ -57,12 +62,14 @@ const showpasswordonclick=()=>{
             <label className="block text-lg font-medium text-black">Password:</label>
             <input
              value={password}
-             onChange={(e)=>setpassword(e.target.value)}
+             onChange={(e)=>{setpassword(e.target.value)
+              istypepassword(true);
+             }}
               type={showpassword?"text":"password"}
               placeholder="Enter your password"
               className="w-full mt-1 p-2 text-black  border border-gray-600 rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <div onClick={showpasswordonclick} className='absolute top-96 pt-20 left-2/4 mt-10  pl-44'>{showpassword?<Eye className='text-black' />:<EyeOff className='text-black'/>}</div>
+            <div onClick={showpasswordonclick} className='absolute top-96 pt-20 left-2/4 mt-10  pl-44'>{typepassword?showpassword?<Eye className='text-black' />:<EyeOff className='text-black'/>:null}</div>
           </div>
         
           <button

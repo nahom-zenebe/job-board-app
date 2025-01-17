@@ -1,52 +1,95 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllApplicationsForRecruiter } from '../feature/applications';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getApplicationById } from '../feature/applications';
+import { useParams } from 'react-router-dom';
 
-function Applications() {
+function MyApplication() {
   const dispatch = useDispatch();
+  const { seekerId } = useParams();
+  const { authUser } = useSelector((state) => state.auth);
+  const { isApplicationgetById, ApplicationById, error } = useSelector((state) => state.Application);
 
-  const { AllApplicationsForRecruiter, isgetAllApplicationsForRecruiter } = useSelector(
-    (state) => state.Application
-  );
+  const [ApplicationData, setApplicationData] = useState(ApplicationById || null);
 
   useEffect(() => {
-    if (!AllApplicationsForRecruiter && !isgetAllApplicationsForRecruiter) {
-      dispatch(getAllApplicationsForRecruiter());
+    if (seekerId) {
+      dispatch(getApplicationById({ seekerId }));
     }
-  }, [dispatch, AllApplicationsForRecruiter, isgetAllApplicationsForRecruiter]);
+  }, [dispatch, seekerId]);
 
-  if (isgetAllApplicationsForRecruiter) {
-    return <h1 className="text-center mt-20">Loading...</h1>;
+  useEffect(() => {
+    if (ApplicationById) {
+      setApplicationData(ApplicationById);
+    }
+  }, [ApplicationById]);
+
+  if (isApplicationgetById) {
+    return <div>Loading...</div>;
   }
 
-  if (!AllApplicationsForRecruiter || AllApplicationsForRecruiter.length === 0) {
-    return <h1 className="text-center mt-20">No Applications Found</h1>;
+  if (error) {
+    return <div>Error: {error.message}</div>;
   }
+
+  if (!ApplicationData || (Array.isArray(ApplicationData) && ApplicationData.length === 0)) {
+    return (
+      <div className="w-full p-6 bg-white rounded-lg shadow-lg text-center">
+        <p className="text-gray-700">You don't have any applications.</p>
+      </div>
+    );
+  }
+
+  const applications = Array.isArray(ApplicationData) ? ApplicationData : [ApplicationData];
 
   return (
-    <div className="h-screen bg-gray-50 w-full rounded-2xl shadow-2xl p-10">
-      <h1 className="text-2xl font-bold text-center mb-10">Applications</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {AllApplicationsForRecruiter.map((application, index) => (
-          <div
-            key={index}
-            className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
-          >
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-semibold">{application.job.title}</h3>
-              <span className="text-sm text-gray-500">{application.job.company}</span>
+    <div className="w-full p-6 bg-white rounded-lg shadow-lg">
+      {applications.map((Applicationdata) => (
+        <div className="mb-6" key={Applicationdata.id || Applicationdata._id}>
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-xl font-semibold">
+                {Applicationdata.job?.title} at {Applicationdata.job?.company}
+              </h3>
             </div>
-            <p className="text-gray-700 mb-2">Applicant: {application.seeker.name}</p>
-            <p className="text-gray-700 mb-2">Location: {application.location}</p>
-            <p className="text-gray-700 mb-2">Phone: {application.phone}</p>
-            <p className="text-gray-700 mb-2">Education: {application.education}</p>
-            <p className="text-gray-700 mb-2">Cover Letter: {application.coverLetter}</p>
-            <p className="text-gray-500 text-sm">Applied At: {new Date(application.appliedAt).toLocaleString()}</p>
+            <span className="bg-gray-200 px-4 py-1 rounded-full text-sm text-gray-700">
+              {Applicationdata.job?.role}
+            </span>
           </div>
-        ))}
-      </div>
+
+          <p className="text-gray-700 mb-4">{Applicationdata.job?.description}</p>
+
+          {/* Application Data */}
+          <div className="space-y-2">
+            <div className="flex justify-between">
+              <p className="font-medium">Applicant:</p>
+              <p>{Applicationdata.seeker?.name} ({Applicationdata.seeker?.email})</p>
+            </div>
+
+            <div className="flex justify-between">
+              <p className="font-medium">Phone:</p>
+              <p>{Applicationdata.phone}</p>
+            </div>
+
+            <div className="flex justify-between">
+              <p className="font-medium">Location:</p>
+              <p>{Applicationdata.location}</p>
+            </div>
+
+            <div className="flex justify-between">
+              <p className="font-medium">Applied At:</p>
+              <p>{new Date(Applicationdata.appliedAt).toLocaleString()}</p>
+            </div>
+          </div>
+
+          <div className="mt-4">
+            <button className="bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 w-full">
+              View More Details
+            </button>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
 
-export default Applications;
+export default MyApplication;

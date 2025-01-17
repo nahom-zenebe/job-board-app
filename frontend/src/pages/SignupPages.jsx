@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { use, useState } from 'react';
 import Navbar from '../Components/Navbar'
 import Footer from '../Components/Footer'
 import toast from 'react-hot-toast';
@@ -23,6 +23,7 @@ function SignupPages() {
   const[showpassword,setshowpassword]=useState(false)
   const [dragActive, setDragActive] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
+  const[typepassword,istypepassword]=useState(false)
 
 
 
@@ -121,9 +122,11 @@ const showpasswordonclick = () => {
                 type={showpassword?"text":"password"}
                 value={password}
                 placeholder="Enter your password"
-                onChange={(e)=>setpassword(e.target.value)}
+                onChange={(e)=>{setpassword(e.target.value)
+                  istypepassword(true);
+                }}
                 className="w-full text-black mt-1 p-2  border border-gray-600 rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500"
-              /><div onClick={showpasswordonclick} className='absolute top-2/3 left-2/4  pl-44 pt-1 '>{showpassword?<Eye className='text-black' />:<EyeOff className='text-black'/>}</div>
+              /><div onClick={showpasswordonclick} className='absolute top-2/3 left-2/4  pl-44 pt-1 '>{typepassword?showpassword?<Eye className='text-black' />:<EyeOff className='text-black'/>:null}</div>
             </div>
             <div>
             <label className="block text-lg font-medium text-black">Role:</label>
