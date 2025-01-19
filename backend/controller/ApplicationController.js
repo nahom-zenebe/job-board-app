@@ -72,29 +72,32 @@ module.exports.getApplicationsByJob = async (req, res) => {
 
 
 
-module.exports.getApplicationsBySeeker = async (req, res) => {
-    try {
-      const { seekerId } = req.params;
 
-      if (!seekerId || !mongoose.Types.ObjectId.isValid(seekerId)) {
-        return res.status(400).json({ message: 'Invalid seekerId' });
-      }
-  
-      const applications = await Application.find({seeker:seekerId })
-        .populate('job')
-        .populate('seeker')
+module.exports.getApplicationsPostedByRecruiter = async (req, res) => {
+  try {
+    const { recruiterId } = req.body;
 
-  
-      if (applications.length === 0) {
-        return res.status(404).json({ message: 'No applications found for this seeker' });
-      }
-  
-      res.status(200).json(applications);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error fetching applications for this seeker', error: error.message });
+    
+    if (!mongoose.Types.ObjectId.isValid(recruiterId)) {
+      return res.status(400).json({ message: 'Invalid recruiter ID' });
     }
-  };
+
+    
+    const jobs = await Job.find({ recruiter: recruiterId });
+
+    if (!jobs || jobs.length === 0) {
+      return res.status(404).json({ message: 'No jobs found for this recruiter' });
+    }
+
+  
+    res.status(200).json(jobs);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching jobs for this recruiter', error: error.message });
+  }
+};
+
+
 
   module.exports.getAllApplicationsForRecruiter = async (req, res) => {
     try {

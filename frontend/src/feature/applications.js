@@ -9,8 +9,8 @@ import toast from 'react-hot-toast';
 const initialState={
     isApplicationCreated:false,
     Application:null,
-    isApplicationgetById:false,
-    ApplicationById:null,
+    isApplicationgetByRecruiterId:false,
+    ApplicationByRecruiterId:null,
     AllApplicationsForRecruiter:null,
     isgetAllApplicationsForRecruiter:false
 }
@@ -20,10 +20,19 @@ export const AppForm=createAsyncThunk('applications/applicationForm',async({ job
     const response=await axiosInstance.post(`applications/applicationForm/${jobId}`,data,{ rejectWithValue })
      return response.data
 })
-export const getApplicationById=createAsyncThunk('applications/seeker',async({seekerId},{rejectWithValue })=>{
-   const response=await axiosInstance.get(`applications/seeker/${seekerId}`,{rejectWithValue})
-   return response.data
-})
+export const getApplicationpostedbyRecruiter = createAsyncThunk(
+  'applications/Recruiter/postedjob',
+  async ({recruiterId }, { rejectWithValue }) => {
+    try {
+
+      const response = await axiosInstance.post('applications/Recruiter/postedjob', { recruiterId });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const getAllApplicationsForRecruiter=createAsyncThunk('applications/allapplications',async(_,{rejectWithValue })=>{
     const response=await axiosInstance.get('applications/allapplications',{ withCredentials: true },{rejectWithValue })
     return response.data
@@ -48,19 +57,19 @@ const ApplicationSlice=createSlice({
             toast.error(action.payload || 'Error during application');
           
           });
-          builder.addCase(getApplicationById.pending,(state)=>{
-            state.isApplicationgetById=true
+          builder.addCase(getApplicationpostedbyRecruiter.pending,(state)=>{
+            state.isApplicationgetByRecruiterId=true
 
           }
           )
-          builder.addCase(getApplicationById.fulfilled,(state,action)=>{
-            state.isApplicationgetById=false
-            state.ApplicationById=action.payload
+          builder.addCase(getApplicationpostedbyRecruiter.fulfilled,(state,action)=>{
+            state.isApplicationgetByRecruiterId=false
+            state.ApplicationByRecruiterId=action.payload
 
           }
           )
-          builder.addCase(getApplicationById.rejected,(state,action)=>{
-            state.isApplicationgetById=false
+          builder.addCase(getApplicationpostedbyRecruiter.rejected,(state,action)=>{
+            state.isApplicationgetByRecruiterId=false
            
 
           })
