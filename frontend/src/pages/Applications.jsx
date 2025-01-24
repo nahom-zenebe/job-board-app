@@ -1,21 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getApplicationpostedbyRecruiter } from '../feature/applications';
+import { getApplicationpostedbyRecruiter,getNumberofapplicantforjob } from '../feature/applications';
+import FormattedTime from '../libs/FormattedTime';
+
 
 function MyApplication() {
   const dispatch = useDispatch();
   const { authUser } = useSelector((state) => state.auth);
-  const { isApplicationgetByRecruiterId, ApplicationByRecruiterId, error } = useSelector((state) => state.Application);
+  const { isApplicationgetByRecruiterId, ApplicationByRecruiterId,getnumberofapplicantforjob, error } = useSelector((state) => state.Application);
+  const recruiterId = authUser?.user?.id;
+  const [applicationData, setApplicationData] = useState(ApplicationByRecruiterId || []);
+  
 
+  useEffect(() => {
+    if (applicationData && applicationData.length > 0) {
+    
+      applicationData.forEach((application) => {
+        dispatch(getNumberofapplicantforjob({ jobId: application._id }));
 
-  const recruiterId = authUser.user.id;
+      });
+      console.log(getnumberofapplicantforjob)
+    }
+  }, [dispatch, applicationData]);
  
 
-  const [applicationData, setApplicationData] = useState(ApplicationByRecruiterId || []);
 
   useEffect(() => {
     if (recruiterId) {
-
       dispatch(getApplicationpostedbyRecruiter({ recruiterId }));
     }
   }, [dispatch, recruiterId]);
@@ -25,6 +36,7 @@ function MyApplication() {
       setApplicationData(ApplicationByRecruiterId);
     }
   }, [ApplicationByRecruiterId]);
+
 
   if (isApplicationgetByRecruiterId) {
     return <div className="text-center py-4">Loading...</div>;
@@ -52,26 +64,26 @@ function MyApplication() {
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-xl font-semibold text-gray-800">
-                  {application.job?.title} at {application.job?.company}
+                  {application.title} at {application.company}
                 </h3>
               </div>
               <span className="bg-gray-200 px-4 py-1 rounded-full text-sm text-gray-700">
-                {application.job?.role}
+                {application.role}
               </span>
             </div>
 
-            <p className="text-gray-600 mb-4">{application.job?.description}</p>
+            <p className="text-gray-600 mb-4">{application.description}</p>
 
             {/* Application Data */}
             <div className="space-y-2">
               <div className="flex justify-between text-gray-700">
                 <p className="font-medium">Applicant:</p>
-                <p>{application.seeker?.name} ({application.seeker?.email})</p>
+                <p> ({getnumberofapplicantforjob || 0} people applied so far)</p>
               </div>
 
               <div className="flex justify-between text-gray-700">
-                <p className="font-medium">Phone:</p>
-                <p>{application.phone}</p>
+                <p className="font-medium">Description:</p>
+                <p>{application.description}</p>
               </div>
 
               <div className="flex justify-between text-gray-700">
@@ -80,8 +92,8 @@ function MyApplication() {
               </div>
 
               <div className="flex justify-between text-gray-700">
-                <p className="font-medium">Applied At:</p>
-                <p>{new Date(application.appliedAt).toLocaleString()}</p>
+                <p className="font-medium">Created At:</p>
+                <FormattedTime timestamp={application.postedAt} />
               </div>
             </div>
 

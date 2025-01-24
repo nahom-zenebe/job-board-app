@@ -71,6 +71,20 @@ module.exports.getApplicationsByJob = async (req, res) => {
 };
 
 
+module.exports.getNumberOfApplicantsForJob = async (req,res) => {
+  const {jobId} =req.body
+  try {
+   
+    const applicantCount = await Application.countDocuments({ jobId });
+
+    return applicantCount;
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching applications for number applicate for specific job', error: error.message });
+  
+  }
+};
+
 
 
 module.exports.getApplicationsPostedByRecruiter = async (req, res) => {
