@@ -13,7 +13,10 @@ const initialState={
     ApplicationByRecruiterId:null,
     AllApplicationsForRecruiter:null,
     isgetAllApplicationsForRecruiter:false,
-    getnumberofapplicantforjob:null
+    getnumberofapplicantforjob:null,
+    isappliedjobforuserdisplay:false,
+    appliedjobforuser:null
+
 }
 
 
@@ -42,6 +45,11 @@ export const getAllApplicationsForRecruiter=createAsyncThunk('applications/allap
 export const getNumberofapplicantforjob=createAsyncThunk('applications/numberapplication',async({jobId},{rejectWithValue })=>{
   const reponse=await axiosInstance.get('applications/numberapplication',{rejectWithValue })
   return reponse.data
+})
+
+export const getjobthatappliedbyuser=createAsyncThunk('applications/getappliedjobs',async({userId},{rejectWithValue})=>{
+  const response=await axiosInstance.get('applications/getappliedjobs',{rejectWithValue })
+  return response.data
 })
 
 

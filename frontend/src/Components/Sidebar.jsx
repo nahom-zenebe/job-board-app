@@ -71,9 +71,13 @@ function Sidebar() {
    
           </li>
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
-          {authUser?.user?.role==="seeker"?<Link to='/MainDashboard/MyApplication/applications'> My Applications</Link> :<Link to='/RecruiterDashboard/Applications'>Applications</Link> } 
-          
-          </li>
+  {authUser?.user?.role === "seeker" ? (
+    <Link to={`/MainDashboard/MyApplication/applications/seeker/${authUser.user.id}`}> My Applications</Link>
+  ) : (
+    <Link to="/RecruiterDashboard/Applications">Applications</Link>
+  )}
+</li>
+
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
     
           {authUser?.user?.role==="seeker"?<Link to='/MainDashboard/SavedJob'>SavedJob</Link>  :<Link to='/RecruiterDashboard/Applications'>Applications</Link> }  
