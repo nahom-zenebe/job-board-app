@@ -113,6 +113,24 @@ const ApplicationSlice=createSlice({
 
 
 
+builder.addCase(getjobthatappliedbyuser.pending,(state)=>{
+  state.isappliedjobforuserdisplay=true
+})
+builder.addCase(getjobthatappliedbyuser.fulfilled,(state,action)=>{
+  state.isappliedjobforuserdisplay=false
+  state.appliedjobforuser=action.payload
+})
+builder.addCase(getjobthatappliedbyuser.rejected,(state,action)=>{
+state.isappliedjobforuserdisplay=false
+toast.error(action.payload || 'Error during fetch applications');
+})
+
+
+
+
+
+
+
       
 }})
 
