@@ -47,8 +47,8 @@ export const getNumberofapplicantforjob=createAsyncThunk('applications/numberapp
   return reponse.data
 })
 
-export const getjobthatappliedbyuser=createAsyncThunk('applications/getappliedjobs',async({userId},{rejectWithValue})=>{
-  const response=await axiosInstance.get('applications/getappliedjobs',{rejectWithValue })
+export const getjobthatappliedbyuser=createAsyncThunk('applications/getappliedjobs',async(_,{rejectWithValue})=>{
+  const response=await axiosInstance.get('applications/getappliedjobs',{ withCredentials: true },{rejectWithValue })
   return response.data
 })
 

@@ -40,30 +40,34 @@ module.exports.applicationForm = async (req, res) => {
 
 
 
-  module.exports.getapplicationsuserSubmit= async (req, res) => {
-    try {
-      const { userId } = req.body;
-  
-  
-      if (!userId) {
-        return res.status(400).json({ error: "User ID is required" });
-      }
-  
-      
-      const applications = await Application.find({ seeker: userId }).populate('job');
-  
-     
-      if (!applications || applications.length === 0) {
-        return res.status(404).json({ error: 'No applications found for this user.' });
-      }
-  
 
-      res.status(200).json(applications);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Error in fetching applications", error: error.message });
+module.exports.getapplicationsuserSubmit = async (req, res) => {
+  try {
+ 
+    const userId = req.user?.id; 
+ 
+
+    if (!userId) {
+      return res.status(400).json({ error: "User not authenticated" });
     }
-  };
+
+
+    const applications = await Application.find({ seeker: userId }).populate('job');
+
+    
+    if (!applications || applications.length === 0) {
+      return res.status(200).json({ message: "No applications found.", applications: [] });
+    }
+
+
+    res.status(200).json({ message: "Applications fetched successfully.", applications });
+  } catch (error) {
+
+    console.error('Error fetching applications:', error.message);
+    res.status(500).json({ message: "Error in fetching applications", error: error.message });
+  }
+};
+
 
   
 

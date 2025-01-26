@@ -10,6 +10,7 @@ function UpdateRecruiterProfile() {
 
   const { isUpdatingProfile,recruiterProfile } = useSelector((state) => state.auth);
   const[selectedImage,setselectedImage]=useState(null)
+  const {  authUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
 
@@ -81,6 +82,23 @@ function UpdateRecruiterProfile() {
           </p>
         </div>
         </div>
+        <div className="mt-5">
+
+        <h1 className="text-xl ml-16 mt-4 pl-4 bg-gray-400 text-gray-100 rounded-lg h-10 flex items-center">
+  Name: {authUser?.user?.name || authUser.user?.updatedUser?.name||"guest"}
+</h1>
+
+  <h1
+    className="text-xl ml-16 mt-4 pl-4 bg-gray-400 text-gray-100 rounded-lg h-10 flex items-center"
+  >
+    Email: {authUser?.user?.email|| authUser.user?.updatedUser?.email||"guest@gmail.com"}
+  </h1>
+  <h1
+    className="text-xl ml-16 mt-4 pl-4 bg-gray-400 text-gray-100 rounded-lg h-10 flex items-center"
+  >
+    Role: {authUser?.user?.role|| authUser.user?.updatedUser?.role||"role"}
+  </h1>
+</div>
         </div>
         </div>
 

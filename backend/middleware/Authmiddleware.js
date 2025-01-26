@@ -10,7 +10,8 @@ module.exports.authmiddleware = async (req, res, next) => {
 
       const token = req.cookies.Jobpostingapp;
     
-     
+   
+    
   
       if (!token) {
         return res.status(401).json({ message: "Unauthorized: No token provided." });
@@ -18,6 +19,7 @@ module.exports.authmiddleware = async (req, res, next) => {
   
 
       const decodedToken = jwt.verify(token, process.env.SecretKey);
+      
  
       if (!decodedToken || !decodedToken.userId) {
         return res.status(401).json({ message: "Unauthorized: Invalid token." });
@@ -31,8 +33,7 @@ module.exports.authmiddleware = async (req, res, next) => {
   
 
       req.user = user;
-    
-      
+
       next();
     } catch (error) {
       console.error("Token verification error:", error.message);

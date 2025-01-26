@@ -10,14 +10,12 @@ function MyApplication() {
 
   const [appliedData, setAppliedData] = useState([]);
 
-  const userID = authUser?.user?.id;
-
-
   useEffect(() => {
-    if (userID) {
-      dispatch(getjobthatappliedbyuser({ userID }));
+    if (authUser?.user?.id) {
+      dispatch(getjobthatappliedbyuser());
+  
     }
-  }, [dispatch, userID]);
+  }, [dispatch, authUser?.user?.id]);
 
   useEffect(() => {
     if (appliedjobforuser) {
