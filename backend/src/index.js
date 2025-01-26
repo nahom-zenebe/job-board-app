@@ -12,10 +12,10 @@ const cookieParser = require('cookie-parser');
 
 
 
-
+app.use(express.json({ limit: '50mb' })); 
 app.use(cookieParser())
 
-app.use(express.json({ limit: '50mb' })); 
+
 app.use(cors({
     origin: 'http://localhost:3000', // Replace with your frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'],

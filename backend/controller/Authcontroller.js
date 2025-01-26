@@ -46,7 +46,9 @@ module.exports.signup=async(req,res)=>{
             id:newUser._id,
             name:newUser.name,
             email:newUser.email,
-            role:newUser.role
+            role:newUser.role,
+            ProfilePic:newUser.ProfilePic
+
 
         }
       })
@@ -92,6 +94,7 @@ res.status(201).json({
             name:exisitinguser.name,
             email:exisitinguser.email,
             role:exisitinguser.role,
+            ProfilePic:exisitinguser.ProfilePic
 
         },
    
@@ -131,6 +134,8 @@ module.exports.UpdateProfile = async (req, res) => {
     const { ProfilePic } = req.body;
     const userId = req.user?._id;
 
+
+
     
     
    
@@ -143,7 +148,7 @@ module.exports.UpdateProfile = async (req, res) => {
       
       const uploadResponse = await cloudinary.uploader.upload(ProfilePic, {
         folder: "profile_pics", 
-        upload_preset: "ml_default", 
+        upload_preset: "upload", 
       });
 
       

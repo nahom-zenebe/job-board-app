@@ -3,7 +3,7 @@ import { axiosInstance } from '../libs/axios';
 import toast from 'react-hot-toast';
 
 const initialState = {
-  authUser: JSON.parse(localStorage.getItem('authUser')) || null,
+  authUser: JSON.parse(localStorage.getItem('authUser')) || { user: null },
   token: null,
   isSigningup: false,
   isLogging: false,
@@ -42,15 +42,43 @@ export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValu
   }
 });
 
-export const updateProfile = createAsyncThunk('auth/UpdateProfile', async (data, { rejectWithValue }) => {
-  try {
-    const response = await axiosInstance.put('auth/UpdateProfile', data, { withCredentials: true });
-    return response.data;
+export const updateProfile = createAsyncThunk(
+  'auth/updateProfile',
+  async (base64Image, { getState, rejectWithValue }) => {
+    try {
+     
+      const storedUser = JSON.parse(localStorage.getItem('authUser'));
+
+      
+      const updatedUser = {
+        ...storedUser,
+        user: {
+          ...storedUser.user,
+          ProfilePic: base64Image, 
+        },
+      };
+
+     
+      const response = await axiosInstance.put('auth/UpdateProfile', 
+        { ProfilePic: base64Image }, 
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+
    
-  } catch (error) {
-    return rejectWithValue('Error during profile update');
+      const updatedData = response.data;
+
+      
+      localStorage.setItem('authUser', JSON.stringify(updatedData));
+
+      return updatedData; 
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Failed to update profile'
+      );
+    }
   }
-});
+);
+
 
 const authSlice = createSlice({
   name: 'auth',
@@ -104,10 +132,9 @@ const authSlice = createSlice({
       state.isUpdatingProfile = true;
     });
     builder.addCase(updateProfile.fulfilled, (state, action) => {
-      state.authUser = action.payload;
       state.isUpdatingProfile = false;
-      localStorage.setItem('authUser', JSON.stringify(action.payload));
-      toast.success('Profile updated successfully');
+      state.authUser = { ...state.authUser, user: action.payload }; // Replace user with updatedUser
+      localStorage.setItem("authUser", JSON.stringify(state.authUser)); // Persist to localStorage
     });
     builder.addCase(updateProfile.rejected, (state, action) => {
       state.isUpdatingProfile = false;

@@ -20,10 +20,9 @@ function Sidebar() {
 
   
 
-  if (!authUser) {
+  if (!authUser || !authUser.user) {
     return <div>No user data available</div>;
   }
-  
 
   const handleLogout=()=>{
     dispatch (logout())
@@ -48,14 +47,14 @@ function Sidebar() {
       <div className="flex flex-col items-center">
         <img
           className="w-24 h-24 rounded-full border-4 border-blue-500"
-          src={authUser.user.ProfilePic||avatar}
+          src={authUser?.user?.ProfilePic||authUser.user?.updatedUser?.ProfilePic|| avatar}
           alt="User Avatar"
         />
         <h1 className="mt-4 text-lg font-semibold text-gray-800">
-          {authUser.user.name}
+        {authUser.user?.name ||authUser.user?.updatedUser?.name|| "Guest"}
           
         </h1>
-        <p className="text-sm text-gray-500">{authUser.user.role==="seeker"? (<h1 className='text-lg'>seeker</h1>):(<h1 className='text-lg'>Recruiter</h1>)}</p>
+        <p className="text-sm text-gray-500">{authUser?.user?.role==="seeker"? (<h1 className='text-lg'>seeker</h1>):(<h1 className='text-lg'>Recruiter</h1>)}</p>
       </div>
       <hr className='mt-4'></hr>
 
