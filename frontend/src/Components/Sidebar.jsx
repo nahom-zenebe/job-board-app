@@ -79,13 +79,9 @@ function Sidebar() {
 
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
     
-          {authUser?.user?.role==="seeker"?<Link to='/MainDashboard/SavedJob'>SavedJob</Link>  :<Link to='/RecruiterDashboard/Applications'>Applications</Link> }  
+          {authUser?.user?.role==="seeker"?<Link to='/MainDashboard/SavedJob'>SavedJob</Link>  :<Link to='/RecruiterDashboard/ListofApplicantforRecuriter'>List of Applicant</Link> }  
           </li>
-          <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out">
-          {authUser?.user?.role==="seeker"?<Link to='/MainDashboard/AccountSetting'>Account Settings</Link> :<Link to='/RecruiterDashboard/RecruiterAccountSetting'>AccountSetting</Link> } 
           
-            
-          </li>
           <li className="flex items-center text-gray-600 hover:bg-gray-200 hover:text-blue-600 cursor-pointer p-3 rounded-lg transition-all duration-300 ease-in-out" onClick={handleLogout}>
     
           Logout

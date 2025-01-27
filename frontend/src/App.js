@@ -16,8 +16,8 @@ import Applications from './pages/Applications';
 import RecruiterAccountSetting from './pages/RecruiterAccountSetting';
 import UpdateRecruiterProfile from './pages/UpdateRecruiterProfile';
 import RecruiterDashboard from './pages/RecruiterDashboard';
-import AccountSetting from './pages/AccountSetting';
 import Searchjobs from './pages/Searchjobs';
+import ListofApplicantforRecuriter from './pages/ListofApplicantforRecuriter';
 import PagenotFound from './pages/PagenotFound.jsx'
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -44,13 +44,15 @@ function App() {
         <Route path="MyApplication/applications/seeker/:seekerId" element={<MyApplication/>}/>
         <Route path="SavedJob" element={<SavedJob/>}/>
         <Route path="/MainDashboard/Applicationform/:jobId" element={<Applicationform/>}/>
-        <Route path="AccountSetting" element={<AccountSetting/>}/>
+      
       </Route>
       <Route path="/RecruiterDashboard" element={<RecruiterDashboard />}>
   <Route path="UpdateRecruiterProfile" element={<UpdateRecruiterProfile />} />
   <Route path="Postingjob" element={<Postingjob />} />
   <Route path="Applications" element={<Applications />} />
   <Route path="RecruiterAccountSetting" element={<RecruiterAccountSetting />} />
+    <Route path="ListofApplicantforRecuriter" element={<ListofApplicantforRecuriter/>} />
+
   
    </Route>
       </Routes>
