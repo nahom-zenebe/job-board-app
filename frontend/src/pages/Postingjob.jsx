@@ -23,6 +23,7 @@ function PostingJob() {
 
   
   const handleChange = (e) => {
+    e.preventDefault()
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -43,7 +44,7 @@ function PostingJob() {
   return (
     <div className="h-screen bg-gray-100">
       <div className="bg-white w-full max-w-4xl p-8 h-screen rounded-lg shadow-xl">
-        <h2 className="text-3xl font-semibold text-gray-800 mb-6">Post a Job</h2>
+        <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">Post a Job</h2>
         
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">

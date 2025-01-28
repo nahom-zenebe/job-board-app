@@ -7,7 +7,7 @@ const {applicationForm,getApplicationsByJob,getNumberOfApplicantsForJob ,getAppl
 router.post('/applicationForm/:jobId',applicationForm)
 router.get('/:jobId', getApplicationsByJob);
 router.get('/numberapplication',getNumberOfApplicantsForJob );
-router.get('/appliedJobs',authmiddleware,getapplicationsuserSubmit);
+router.get('/appliedJobs/:userId',authmiddleware,getapplicationsuserSubmit);
 
 
 router.post('/Recruiter/postedjob', getApplicationsPostedByRecruiter);

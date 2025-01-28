@@ -18,7 +18,7 @@ function Sidebar() {
 
 
 
-  
+
 
   if (!authUser || !authUser.user) {
     return <div>No user data available</div>;
@@ -27,8 +27,9 @@ function Sidebar() {
   const handleLogout=()=>{
     dispatch (logout())
     .then(()=>{
-    
+
       navigate('/');
+  
     }
 
    
@@ -73,7 +74,7 @@ function Sidebar() {
   {authUser?.user?.role === "seeker" ? (
     <Link to={`/MainDashboard/MyApplication/applications/seeker/${authUser.user.id}`}> My Applications</Link>
   ) : (
-    <Link to="/RecruiterDashboard/Applications">Applications</Link>
+    <Link to="/RecruiterDashboard/Applications">Created Applications</Link>
   )}
 </li>
 

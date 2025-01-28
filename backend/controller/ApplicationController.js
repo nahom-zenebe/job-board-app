@@ -44,7 +44,8 @@ module.exports.applicationForm = async (req, res) => {
 module.exports.getapplicationsuserSubmit = async (req, res) => {
   try {
  
-    const userId = req.user?.id; 
+    const {userId} =req.params;
+  
  
 
     if (!userId) {
@@ -54,15 +55,15 @@ module.exports.getapplicationsuserSubmit = async (req, res) => {
 
     const applications = await Application.find({ seeker: userId }).populate('job');
 
+
     
     if (!applications || applications.length === 0) {
       return res.status(200).json({ message: "No applications found.", applications: [] });
     }
-
-
-    res.status(200).json({ message: "Applications fetched successfully.", applications });
+    
+    res.status(200).json({applications });
   } catch (error) {
-
+   
     console.error('Error fetching applications:', error.message);
     res.status(500).json({ message: "Error in fetching applications", error: error.message });
   }

@@ -47,9 +47,9 @@ export const getNumberofapplicantforjob=createAsyncThunk('applications/numberapp
   return reponse.data
 })
 
-export const getjobthatappliedbyuser=createAsyncThunk('applications/getappliedjobs',async(_,{rejectWithValue})=>{
-  const response=await axiosInstance.get('applications/getappliedjobs',{ withCredentials: true },{rejectWithValue })
-  return response.data
+export const getjobthatappliedbyuser=createAsyncThunk('applications/appliedJobs',async({userId},{rejectWithValue})=>{
+  const response=await axiosInstance.get(`applications/appliedJobs/${userId}`,{ withCredentials: true },{rejectWithValue })
+  return response.data.applications
 })
 
 
@@ -123,6 +123,7 @@ builder.addCase(getjobthatappliedbyuser.fulfilled,(state,action)=>{
 builder.addCase(getjobthatappliedbyuser.rejected,(state,action)=>{
 state.isappliedjobforuserdisplay=false
 toast.error(action.payload || 'Error during fetch applications');
+console.log(action.error)
 })
 
 
