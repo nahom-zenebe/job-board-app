@@ -29,7 +29,7 @@ export const getApplicationpostedbyRecruiter = createAsyncThunk(
   async ({recruiterId }, { rejectWithValue }) => {
     try {
 
-      const response = await axiosInstance.post('applications/Recruiter/postedjob', { recruiterId });
+      const response = await axiosInstance.get('applications/Recruiter/postedjob', { recruiterId });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -52,6 +52,21 @@ export const getjobthatappliedbyuser=createAsyncThunk('applications/appliedJobs'
   return response.data.applications
 })
 
+export const updateApplicationStatus = createAsyncThunk(
+  "applicationsSubmit/status",
+  async ({ applicationId, status }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(
+        `applicationsSubmit/status`,  
+        { applicationId, status },  
+        { withCredentials: true }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 const ApplicationSlice=createSlice({
     name:'Application',
@@ -125,6 +140,29 @@ state.isappliedjobforuserdisplay=false
 toast.error(action.payload || 'Error during fetch applications');
 console.log(action.error)
 })
+
+
+
+builder.addCase(updateApplicationStatus.pending, (state) => {
+ 
+  state.isappliedjobforuserdisplay = false;
+});
+
+
+builder.addCase(updateApplicationStatus.fulfilled, (state, action) => {
+  state.appliedjobforuser = action.payload;  
+  state.isappliedjobforuserdisplay = true; 
+});
+
+builder.addCase(updateApplicationStatus.rejected, (state, action) => {
+  state.isappliedjobforuserdisplay = false;
+  toast.error(action.payload?.error || 'Error during update status');
+  console.log(action.error);
+});
+
+
+
+
 
 
 

@@ -34,7 +34,7 @@ function MyApplication() {
     <div className="bg-white shadow-2xl rounded-2xl ml-10 h-screen overflow-y-auto p-6">
   <h1 className="text-center pt-5 text-2xl font-bold text-gray-800">Jobs Applied</h1>
 
-  {isappliedjobforuserdisplay ? (
+  {!isappliedjobforuserdisplay ? (
     appliedjobforuser?.length > 0 ? (
       <ul className="p-5 space-y-6">
         {appliedjobforuser.map((jobApplication) => (

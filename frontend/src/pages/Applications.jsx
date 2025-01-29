@@ -9,6 +9,7 @@ function MyApplication() {
   const { authUser } = useSelector((state) => state.auth);
   const { isApplicationgetByRecruiterId, ApplicationByRecruiterId,getnumberofapplicantforjob, error } = useSelector((state) => state.Application);
   const recruiterId = authUser?.user?.id;
+
   const [applicationData, setApplicationData] = useState(ApplicationByRecruiterId || []);
   
 
@@ -17,9 +18,10 @@ function MyApplication() {
     
       applicationData.forEach((application) => {
         dispatch(getNumberofapplicantforjob({ jobId: application._id }));
+        
 
       });
-      console.log(getnumberofapplicantforjob)
+    
     }
   }, [dispatch, applicationData]);
  
@@ -74,7 +76,7 @@ function MyApplication() {
 
             <p className="text-gray-600 mb-4">{application.description}</p>
 
-            {/* Application Data */}
+            
             <div className="space-y-2">
               <div className="flex justify-between text-gray-700">
                 <p className="font-medium">Applicant:</p>

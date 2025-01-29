@@ -13,7 +13,6 @@ import Applicationform from './pages/Applicationform.jsx'
 import SavedJob from './pages/SavedJob.jsx';
 import Postingjob from './pages/Postingjob';
 import Applications from './pages/Applications';
-import RecruiterAccountSetting from './pages/RecruiterAccountSetting';
 import UpdateRecruiterProfile from './pages/UpdateRecruiterProfile';
 import RecruiterDashboard from './pages/RecruiterDashboard';
 import Searchjobs from './pages/Searchjobs';
@@ -50,7 +49,6 @@ function App() {
   <Route path="UpdateRecruiterProfile" element={<UpdateRecruiterProfile />} />
   <Route path="Postingjob" element={<Postingjob />} />
   <Route path="Applications" element={<Applications />} />
-  <Route path="RecruiterAccountSetting" element={<RecruiterAccountSetting />} />
     <Route path="ListofApplicantforRecuriter" element={<ListofApplicantforRecuriter/>} />
 
   

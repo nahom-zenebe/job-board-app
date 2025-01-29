@@ -10,9 +10,9 @@ router.get('/numberapplication',getNumberOfApplicantsForJob );
 router.get('/appliedJobs/:userId',authmiddleware,getapplicationsuserSubmit);
 
 
-router.post('/Recruiter/postedjob', getApplicationsPostedByRecruiter);
+router.get('/Recruiter/postedjob', getApplicationsPostedByRecruiter);
 router.get('/allapplications',getAllApplicationsForRecruiter);
-router.put('/:applicationId/status',  recruitermiddleware, updateApplicationStatus);
+router.put('/applicationsSubmit/status', updateApplicationStatus);
 router.delete('/Removeapplications/:Id', authmiddleware, recruitermiddleware,RemoveApplication)
 
 

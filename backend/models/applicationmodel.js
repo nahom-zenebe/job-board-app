@@ -10,6 +10,7 @@ const applicationSchema=new mongoose.Schema({
   location:{type:String,required:true},
   coverLetter: { type: String },
   Education: { type: String, enum: ['highschool', 'bachelor_degree', 'master_degree','doctorate'], default: 'bachelor_degree' },
+  status:{type:String,enum:["pending","Accepted","Rejected"],default:"pending"},
   appliedAt: { type: Date, default: Date.now },
   
   

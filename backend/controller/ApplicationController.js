@@ -8,7 +8,7 @@ module.exports.applicationForm = async (req, res) => {
     const { seeker, phone, location, coverLetter, Education } = req.body;
     const { jobId } = req.params;
 
-    if (!jobId || !seeker || !coverLetter || !phone || !Education) {
+    if (!jobId || !seeker || !coverLetter || !phone || !Education||!status) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -26,6 +26,7 @@ module.exports.applicationForm = async (req, res) => {
       phone,
       coverLetter,
       Education,
+      status
     });
 
   
@@ -163,17 +164,19 @@ module.exports.getApplicationsPostedByRecruiter = async (req, res) => {
 
 
 module.exports.updateApplicationStatus = async (req, res) => {
-    try {
-        const { status } = req.body;
-        const application = await Application.findByIdAndUpdate(req.params.applicationId, { status }, { new: true });
-        if (!application) {
-            return res.status(404).json({ error: 'Application not found' });
-        }
-        res.status(200).json(application);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to update application status' });
+  try {
+    const { applicationId, status } = req.body;
+    const application = await Application.findByIdAndUpdate(applicationId, { status }, { new: true });
+
+    if (!application) {
+      return res.status(404).json({ error: 'Application not found' });
     }
+    res.status(200).json(application);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update application status' });
+  }
 };
+
   
 module.exports.RemoveApplication = async (req, res) => {
   const { applicationId } = req.params; 
