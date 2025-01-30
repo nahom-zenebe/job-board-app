@@ -15,7 +15,8 @@ const initialState={
     isgetAllApplicationsForRecruiter:false,
     getnumberofapplicantforjob:null,
     isappliedjobforuserdisplay:false,
-    appliedjobforuser:null
+    appliedjobforuser:null,
+    updatedStatus:null
 
 }
 
@@ -24,18 +25,20 @@ export const AppForm=createAsyncThunk('applications/applicationForm',async({ job
     const response=await axiosInstance.post(`applications/applicationForm/${jobId}`,data,{ rejectWithValue })
      return response.data
 })
+
+
 export const getApplicationpostedbyRecruiter = createAsyncThunk(
   'applications/Recruiter/postedjob',
-  async ({recruiterId }, { rejectWithValue }) => {
+  async ({ recruiterId }, { rejectWithValue }) => {
     try {
-
-      const response = await axiosInstance.get('applications/Recruiter/postedjob', { recruiterId });
+      const response = await axiosInstance.get(`applications/Recruiter/postedjob?recruiterId=${recruiterId}`);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response?.data || "Failed to fetch applications");
     }
   }
 );
+
 
 export const getAllApplicationsForRecruiter=createAsyncThunk('applications/allapplications',async(_,{rejectWithValue })=>{
     const response=await axiosInstance.get('applications/allapplications',{ withCredentials: true },{rejectWithValue })
@@ -53,20 +56,34 @@ export const getjobthatappliedbyuser=createAsyncThunk('applications/appliedJobs'
 })
 
 export const updateApplicationStatus = createAsyncThunk(
-  "applicationsSubmit/status",
+  "applications/applicationsSubmit/status",
   async ({ applicationId, status }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(
-        `applicationsSubmit/status`,  
-        { applicationId, status },  
-        { withCredentials: true }
-      );
+      const response=axiosInstance.put("applications/applicationsSubmit/status", { applicationId, status });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
   }
 );
+
+export const RemoveApplication = createAsyncThunk(
+  'applications//Removeapplications',
+  async (applicationId, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.delete(`applications/Removeapplications`, {
+        data: { applicationId },
+        withCredentials: true
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
+
 
 const ApplicationSlice=createSlice({
     name:'Application',
@@ -150,7 +167,7 @@ builder.addCase(updateApplicationStatus.pending, (state) => {
 
 
 builder.addCase(updateApplicationStatus.fulfilled, (state, action) => {
-  state.appliedjobforuser = action.payload;  
+  state.updatedStatus = action.payload;  
   state.isappliedjobforuserdisplay = true; 
 });
 
@@ -161,6 +178,13 @@ builder.addCase(updateApplicationStatus.rejected, (state, action) => {
 });
 
 
+
+
+builder.addCase(RemoveApplication.fulfilled, (state, action) => {
+  state.AllApplicationsForRecruiter = state.AllApplicationsForRecruiter.filter(
+    (applicant) => applicant._id !== action.payload._id
+  );
+});
 
 
 

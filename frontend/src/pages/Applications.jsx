@@ -1,31 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getApplicationpostedbyRecruiter,getNumberofapplicantforjob } from '../feature/applications';
+import { getApplicationpostedbyRecruiter, getNumberofapplicantforjob } from '../feature/applications';
 import FormattedTime from '../libs/FormattedTime';
+import { X } from 'lucide-react'; 
+import { RemoveApplication } from '../feature/applications';
+import ConfirmRemoveModal from '../libs/ConfirmRemovaModal'; // Import the modal component
+
 
 
 function MyApplication() {
   const dispatch = useDispatch();
   const { authUser } = useSelector((state) => state.auth);
-  const { isApplicationgetByRecruiterId, ApplicationByRecruiterId,getnumberofapplicantforjob, error } = useSelector((state) => state.Application);
+  const { isApplicationgetByRecruiterId, ApplicationByRecruiterId, getnumberofapplicantforjob, error } = useSelector((state) => state.Application);
   const recruiterId = authUser?.user?.id;
+  const [selectedApplicationId, setSelectedApplicationId] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [applicationData, setApplicationData] = useState(ApplicationByRecruiterId || []);
-  
-
-  useEffect(() => {
-    if (applicationData && applicationData.length > 0) {
-    
-      applicationData.forEach((application) => {
-        dispatch(getNumberofapplicantforjob({ jobId: application._id }));
-        
-
-      });
-    
-    }
-  }, [dispatch, applicationData]);
- 
-
 
   useEffect(() => {
     if (recruiterId) {
@@ -38,7 +29,6 @@ function MyApplication() {
       setApplicationData(ApplicationByRecruiterId);
     }
   }, [ApplicationByRecruiterId]);
-
 
   if (isApplicationgetByRecruiterId) {
     return <div className="text-center py-4">Loading...</div>;
@@ -56,19 +46,41 @@ function MyApplication() {
     );
   }
 
-  const applications = Array.isArray(applicationData) ? applicationData : [applicationData];
+
+  const handleRemoveClick = (applicationId) => {
+    setSelectedApplicationId(applicationId);
+    setIsModalOpen(true);
+  };
+
+  const handleConfirmRemove = () => {
+    if (selectedApplicationId) {
+      dispatch(RemoveApplication(selectedApplicationId));
+      setIsModalOpen(false);
+      setSelectedApplicationId(null);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedApplicationId(null);
+  };
+
+
 
   return (
     <div className="w-full p-6 bg-white rounded-lg shadow-lg max-h-screen overflow-auto">
       <div className="space-y-6">
-        {applications.map((application) => (
+        {applicationData.map((application) => (
           <div className="mb-6 p-4 bg-gray-100 rounded-lg shadow-md" key={application._id}>
+              <X    className="remove-btn"
+            onClick={() => handleRemoveClick(application._id)}/>
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-xl font-semibold text-gray-800">
                   {application.title} at {application.company}
                 </h3>
               </div>
+            
               <span className="bg-gray-200 px-4 py-1 rounded-full text-sm text-gray-700">
                 {application.role}
               </span>
@@ -76,7 +88,6 @@ function MyApplication() {
 
             <p className="text-gray-600 mb-4">{application.description}</p>
 
-            
             <div className="space-y-2">
               <div className="flex justify-between text-gray-700">
                 <p className="font-medium">Applicant:</p>
@@ -107,6 +118,11 @@ function MyApplication() {
           </div>
         ))}
       </div>
+      <ConfirmRemoveModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onConfirm={handleConfirmRemove}
+      />
     </div>
   );
 }

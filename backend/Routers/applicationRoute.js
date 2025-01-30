@@ -13,7 +13,7 @@ router.get('/appliedJobs/:userId',authmiddleware,getapplicationsuserSubmit);
 router.get('/Recruiter/postedjob', getApplicationsPostedByRecruiter);
 router.get('/allapplications',getAllApplicationsForRecruiter);
 router.put('/applicationsSubmit/status', updateApplicationStatus);
-router.delete('/Removeapplications/:Id', authmiddleware, recruitermiddleware,RemoveApplication)
+router.delete('/Removeapplications', authmiddleware, recruitermiddleware,RemoveApplication)
 
 
 

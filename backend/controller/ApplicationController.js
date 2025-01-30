@@ -124,27 +124,26 @@ module.exports.getNumberOfApplicantsForJob = async (req,res) => {
 
 module.exports.getApplicationsPostedByRecruiter = async (req, res) => {
   try {
-    const { recruiterId } = req.body;
+    const { recruiterId } = req.query; 
 
-    
-    if (!mongoose.Types.ObjectId.isValid(recruiterId)) {
-      return res.status(400).json({ message: 'Invalid recruiter ID' });
+    if (!recruiterId || !mongoose.Types.ObjectId.isValid(recruiterId)) {
+      return res.status(400).json({ message: 'Invalid or missing recruiter ID' });
     }
 
-    
     const jobs = await Job.find({ recruiter: recruiterId });
 
     if (!jobs || jobs.length === 0) {
       return res.status(404).json({ message: 'No jobs found for this recruiter' });
     }
 
-  
     res.status(200).json(jobs);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error fetching jobs for this recruiter', error: error.message });
   }
 };
+
+
 
 
 
@@ -179,24 +178,21 @@ module.exports.updateApplicationStatus = async (req, res) => {
 
   
 module.exports.RemoveApplication = async (req, res) => {
-  const { applicationId } = req.params; 
+  const { applicationId } = req.body; 
 
   try {
-  
     if (!applicationId) {
       return res.status(400).json({ error: 'Application ID is required' });
     }
-    const deletedApplication = await Application.findByIdAndDelete(applicationId);
 
+    const deletedApplication = await Application.findByIdAndDelete(applicationId);
 
     if (!deletedApplication) {
       return res.status(404).json({ error: 'Application not found' });
     }
 
-   
     res.status(200).json({ message: 'Application removed successfully', deletedApplication });
   } catch (error) {
-   
     console.error('Error removing application:', error);
     res.status(500).json({ error: 'An error occurred while removing the application' });
   }

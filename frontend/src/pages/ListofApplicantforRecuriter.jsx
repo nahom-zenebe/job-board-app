@@ -4,21 +4,33 @@ import avatar from '../images/avatar.png';
 import { getAllApplicationsForRecruiter, updateApplicationStatus } from '../feature/applications';
 import FormattedTime from '../libs/FormattedTime';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
 function ListofApplicantforRecuriter() {
   const dispatch = useDispatch();
-  const { isgetAllApplicationsForRecruiter, AllApplicationsForRecruiter } = useSelector((state) => state.Application);
-  const { authUser } = useSelector((state) => state.auth);
+  const { isgetAllApplicationsForRecruiter, AllApplicationsForRecruiter, updatedStatus } = useSelector(
+    (state) => state.Application
+  );
 
   useEffect(() => {
     dispatch(getAllApplicationsForRecruiter());
   }, [dispatch]);
 
-  // Handle status change
+
   const handleStatusChange = (applicationId, newStatus) => {
-    dispatch(updateApplicationStatus({ applicationId, status: newStatus }));
+    dispatch(updateApplicationStatus({ applicationId, status: newStatus }))
+      .then((response) => {
+      
+        toast.success('Status updated successfully!');
+     
+        dispatch(getAllApplicationsForRecruiter());
+      })
+      .catch((error) => {
+
+        toast.error('Failed to update status.');
+      });
   };
 
-  // Show loading or no applicants message
   if (isgetAllApplicationsForRecruiter) {
     return <div className="text-center text-blue-600">Loading applicants...</div>;
   }
@@ -82,11 +94,11 @@ function ListofApplicantforRecuriter() {
                         : "text-gray-600"
                     }`}
                   >
-                    {applicant.status || "Pending"}
+                    {updatedStatus || applicant.status}
                   </span>
                 </p>
 
-                {/* Status Update Buttons */}
+     
                 <div className="mt-2">
                   <button
                     onClick={() => handleStatusChange(applicant._id, 'Accepted')}
