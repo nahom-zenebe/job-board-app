@@ -178,7 +178,7 @@ module.exports.updateApplicationStatus = async (req, res) => {
 
   
 module.exports.RemoveApplication = async (req, res) => {
-  const { applicationId } = req.body; 
+  const { applicationId } = req.body;
 
   try {
     if (!applicationId) {
