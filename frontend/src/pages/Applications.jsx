@@ -31,6 +31,7 @@ function MyApplication() {
   if (isApplicationgetByRecruiterId) {
     return <div className="text-center py-4">Loading...</div>;
   }
+  console.log(applicationData)
 
   if (error) {
     return <div className="text-center py-4 text-red-500">Error: {error.message}</div>;
@@ -57,16 +58,17 @@ function MyApplication() {
   };
 
   const handleConfirmRemove = () => {
-    console.log("Deleting Application ID:", selectedApplicationId); // ✅ Debugging log
+    console.log("Deleting Application ID:", selectedApplicationId); 
   
     if (selectedApplicationId) {
       dispatch(RemoveApplication(selectedApplicationId))
         .unwrap()
-        .then(() => {
+        .then((response) => {
+          console.log("API Response:", response); 
           toast.success('Application removed successfully');
         })
         .catch((err) => {
-          console.error("Error removing application:", err); // ✅ Debugging log
+          console.error("Error removing application:", err);
           toast.error(err || 'Failed to remove application');
         });
   
@@ -74,6 +76,7 @@ function MyApplication() {
       setSelectedApplicationId(null);
     }
   };
+  
   
 
   

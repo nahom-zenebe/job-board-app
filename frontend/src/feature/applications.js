@@ -67,21 +67,28 @@ export const updateApplicationStatus = createAsyncThunk(
   }
 );
 
+
 export const RemoveApplication = createAsyncThunk(
   'applications/Removeapplications',
-  async (applicationId, { rejectWithValue }) => {
+  async (JobId, { rejectWithValue }) => {
     try {
+      console.log("Sending DELETE request for application ID:", JobId); 
+
       const response = await axiosInstance.delete(`/applications/Removeapplications`, {
-        data: { applicationId },
+        data: { JobId },
         withCredentials: true
       });
 
-      return { _id: applicationId }; // ✅ Return the deleted application ID
+      console.log("API Response:", response.data); 
+      return response.data; 
     } catch (error) {
+      console.error("API Delete Request Failed:", error.response?.data || error.message); 
       return rejectWithValue(error.response?.data?.error || 'Failed to remove application');
     }
   }
 );
+
+
 
 
 
@@ -184,9 +191,9 @@ builder.addCase(updateApplicationStatus.rejected, (state, action) => {
 
 builder.addCase(RemoveApplication.fulfilled, (state, action) => {
   state.ApplicationByRecruiterId = state.ApplicationByRecruiterId?.filter(
-    (application) => application._id !== action.payload._id
+    (application) => application._id !== action.meta.arg 
   );
-  toast.success('Application removed successfully');
+
 });
 
 

@@ -122,6 +122,7 @@ module.exports.getNumberOfApplicantsForJob = async (req,res) => {
 
 
 
+
 module.exports.getApplicationsPostedByRecruiter = async (req, res) => {
   try {
     const { recruiterId } = req.query; 
@@ -130,7 +131,8 @@ module.exports.getApplicationsPostedByRecruiter = async (req, res) => {
       return res.status(400).json({ message: 'Invalid or missing recruiter ID' });
     }
 
-    const jobs = await Job.find({ recruiter: recruiterId });
+    const jobs = await Job.find({ recruiter: recruiterId })
+    
 
     if (!jobs || jobs.length === 0) {
       return res.status(404).json({ message: 'No jobs found for this recruiter' });
@@ -178,14 +180,14 @@ module.exports.updateApplicationStatus = async (req, res) => {
 
   
 module.exports.RemoveApplication = async (req, res) => {
-  const { applicationId } = req.body;
+  const { JobId } = req.body;
 
   try {
-    if (!applicationId) {
+    if (!JobId) {
       return res.status(400).json({ error: 'Application ID is required' });
     }
 
-    const deletedApplication = await Application.findByIdAndDelete(applicationId);
+    const deletedApplication = await Job.findByIdAndDelete(JobId);
 
     if (!deletedApplication) {
       return res.status(404).json({ error: 'Application not found' });
