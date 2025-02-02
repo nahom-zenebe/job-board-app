@@ -52,7 +52,7 @@ function UpdateRecruiterProfile() {
         <div className="flex flex-col items-center gap-4">
           <div className="relative">
             <img
-              src={selectedImage  ||avatar}
+          src={authUser?.user?.ProfilePic || selectedImage || avatar}
               alt="Profile"
               className="size-32 rounded-full object-cover border-4 "
             />

@@ -109,10 +109,13 @@ module.exports.getNumberOfApplicantsForJob = async (req,res) => {
   const {jobId} =req.body
   try {
    
+    if(jobId){
+      return res.status(400).json({ message: "Job ID is required" });
+    }
     const applicantCount = await Application.countDocuments({ jobId });
     
 
-    return applicantCount;
+    res.status(200).json({ jobId, applicantCount });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error fetching applications for number applicate for specific job', error: error.message });

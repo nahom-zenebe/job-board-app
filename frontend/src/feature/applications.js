@@ -45,8 +45,8 @@ export const getAllApplicationsForRecruiter=createAsyncThunk('applications/allap
     return response.data
 })
 
-export const getNumberofapplicantforjob=createAsyncThunk('applications/numberapplication',async({jobId},{rejectWithValue })=>{
-  const reponse=await axiosInstance.get('applications/numberapplication',{rejectWithValue })
+export const Numberofapplicantforjob=createAsyncThunk('applications/numberapplication',async({jobId},{rejectWithValue })=>{
+  const reponse=await axiosInstance.get('applications/numberapplication',{jobId},{rejectWithValue })
   return reponse.data
 })
 
@@ -141,14 +141,14 @@ const ApplicationSlice=createSlice({
           toast.error(action.payload || 'Error during fetch application');
       })
 
-      builder.addCase(getNumberofapplicantforjob.pending,(state)=>{
+      builder.addCase( Numberofapplicantforjob.pending,(state)=>{
    
     })
-    builder.addCase(getNumberofapplicantforjob.fulfilled,(state,action)=>{
+    builder.addCase( Numberofapplicantforjob.fulfilled,(state,action)=>{
  
       state.getnumberofapplicantforjob=action.payload
   })
-  builder.addCase(getNumberofapplicantforjob.rejected,(state,action)=>{
+  builder.addCase(Numberofapplicantforjob.rejected,(state,action)=>{
    
     toast.error(action.payload || 'Error during fetch application');
 })
